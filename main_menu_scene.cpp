@@ -1,10 +1,5 @@
 #include "main_menu_scene.hpp"
 
-MainMenuScene::MainMenuScene(GameUtilities *gameUtils)
-{
-    _gameUtils = gameUtils;
-}
-
 void MainMenuScene::update()
 {
     const char* introText = "Welcome to Alien Attack!";
