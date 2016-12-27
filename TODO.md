@@ -1,0 +1,3 @@
+- optimizing text rendering
+- making a main menu
+- making credits menu

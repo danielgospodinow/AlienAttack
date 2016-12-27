@@ -13,8 +13,7 @@ SDL_Components::SDL_Components()
     {
         cout << "Widnow failed to create!" << endl;
 
-        SDL_Quit();
-        exit(0);
+        killApp();
     }
 }
 

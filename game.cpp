@@ -32,6 +32,5 @@ void Game::startGame()
         SDL_RenderPresent(_sdlComponents->getRenderer());
     }
 
-    SDL_Quit();
-    exit(0);
+    _sdlComponents->killApp();
 }
