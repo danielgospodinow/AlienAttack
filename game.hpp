@@ -13,7 +13,7 @@ public:
     ~Game();
 
     void startGame();
-    void gameOver() {this->_isGameOver = false;}
+    void gameOver() {_isGameOver = false;}
 
 private:
     SDL_Components* _sdlComponents;

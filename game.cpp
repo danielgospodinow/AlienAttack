@@ -23,8 +23,11 @@ void Game::startGame()
         SDL_PollEvent(_sdlComponents->getEvent());
         SDL_RenderClear(_sdlComponents->getRenderer());
 
-        Scene* currScene = scenesStack.top();
-        currScene->update();
+        if(scenesStack.size() != 0)
+        {
+            Scene* currScene = scenesStack.top();
+            currScene->update();
+        }
 
         SDL_RenderPresent(_sdlComponents->getRenderer());
     }
