@@ -4,7 +4,7 @@
 #include "scene.hpp"
 #include "game_utilities.hpp"
 
-class MainMenuScene : Scene
+class MainMenuScene : public Scene
 {
 public:
     MainMenuScene(GameUtilities* gameUtils);

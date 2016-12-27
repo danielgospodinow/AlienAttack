@@ -4,8 +4,7 @@
 #include "globals.hpp"
 #include "sdl_components.hpp"
 #include "game_utilities.hpp"
-
-enum Scenes {MainMenu, Credits, SinglePlayScene, MultiplayScene};
+#include "scene.hpp"
 
 class Game
 {
@@ -19,8 +18,8 @@ public:
 private:
     SDL_Components* _sdlComponents;
     GameUtilities* _gameUtils;
-    Scenes _currentScene;
     bool _isGameOver;
+    stack<Scene*> scenesStack;
 };
 
 #endif

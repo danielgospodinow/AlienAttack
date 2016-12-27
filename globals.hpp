@@ -7,6 +7,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include <iostream>
+#include <stack>
 
 using namespace std;
 

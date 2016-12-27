@@ -6,7 +6,8 @@ Game::Game()
     _isGameOver = false;
     _sdlComponents = new SDL_Components();
     _gameUtils = new GameUtilities(_sdlComponents);
-    _currentScene = Scenes::MainMenu;
+
+    scenesStack.push(new MainMenuScene(_gameUtils));
 }
 
 Game::~Game()
@@ -17,20 +18,13 @@ Game::~Game()
 
 void Game::startGame()
 {
-    MainMenuScene mms = MainMenuScene(_gameUtils);
-
     while(!_isGameOver && _sdlComponents->getEvent()->type != SDL_QUIT)
     {
         SDL_PollEvent(_sdlComponents->getEvent());
         SDL_RenderClear(_sdlComponents->getRenderer());
 
-        switch(_currentScene)
-        {
-        case Scenes::MainMenu: mms.update(); break;
-        case Scenes::Credits: break;
-        case Scenes::MultiplayScene: break;
-        case Scenes::SinglePlayScene: break;
-        };
+        Scene* currScene = scenesStack.top();
+        currScene->update();
 
         SDL_RenderPresent(_sdlComponents->getRenderer());
     }
