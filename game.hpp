@@ -15,11 +15,15 @@ public:
     void startGame();
     void gameOver() {_isGameOver = false;}
 
+    static void pushScene(Scene* scene);
+    static void popScene();
+    static void clearScenes();
+
 private:
     SDL_Components* _sdlComponents;
     GameUtilities* _gameUtils;
     bool _isGameOver;
-    stack<Scene*> scenesStack;
+    static stack<Scene*> _scenesStack;
 };
 
 #endif

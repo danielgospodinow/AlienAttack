@@ -15,6 +15,10 @@ SDL_Components::SDL_Components()
 
         killApp();
     }
+
+    SDL_Surface* icon = IMG_Load("sprites/icon.png");
+    SDL_SetWindowIcon(_window, icon);
+    SDL_FreeSurface(icon);
 }
 
 SDL_Components::~SDL_Components()

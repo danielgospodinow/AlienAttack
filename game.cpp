@@ -1,13 +1,15 @@
 #include "game.hpp"
 #include "main_menu_scene.hpp"
 
+stack<Scene*> Game::_scenesStack;
+
 Game::Game()
 {
     _isGameOver = false;
     _sdlComponents = new SDL_Components();
     _gameUtils = new GameUtilities(_sdlComponents);
 
-    scenesStack.push(new MainMenuScene(_gameUtils));
+    pushScene(new MainMenuScene(_gameUtils));
 }
 
 Game::~Game()
@@ -23,9 +25,9 @@ void Game::startGame()
         SDL_PollEvent(_sdlComponents->getEvent());
         SDL_RenderClear(_sdlComponents->getRenderer());
 
-        if(scenesStack.size() != 0)
+        if(_scenesStack.size() != 0)
         {
-            Scene* currScene = scenesStack.top();
+            Scene* currScene = _scenesStack.top();
             currScene->update();
         }
 
@@ -33,4 +35,25 @@ void Game::startGame()
     }
 
     _sdlComponents->killApp();
+}
+
+void Game::pushScene(Scene* scene)
+{
+    _scenesStack.push(scene);
+}
+
+void Game::popScene()
+{
+    if(_scenesStack.size() == 0)
+        return;
+
+    Scene* poppedScene = _scenesStack.top();
+    _scenesStack.pop();
+    delete poppedScene;
+}
+
+void Game::clearScenes()
+{
+    while(_scenesStack.size() > 0)
+        popScene();
 }

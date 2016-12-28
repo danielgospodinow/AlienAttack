@@ -7,7 +7,7 @@
 class Scene
 {
 public:
-    explicit Scene(GameUtilities* gameUtils) {_gameUtils = gameUtils;}
+    Scene(GameUtilities* gameUtils) {_gameUtils = gameUtils;}
     virtual ~Scene() {delete _gameUtils;}
     virtual void update() = 0;
 protected:

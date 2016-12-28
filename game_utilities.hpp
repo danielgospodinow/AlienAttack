@@ -9,6 +9,8 @@ class GameUtilities
 public:
     GameUtilities(SDL_Components* sdlComponents);
     void printText(const char *text, Colors color, Vec2 textLocation, Vec2 textSize);
+    SDL_Texture* getText(const char *text, Colors color);
+    void renderText(SDL_Texture* texture, Vec2 pos, Vec2 size);
 
 private:
     SDL_Components* _sdlComponents;
