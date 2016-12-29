@@ -1,3 +1,5 @@
-- optimizing text rendering
-- making a main menu
-- making credits menu
+- [x] scene oriented system
+- [x] text rendering system with smart text resizing
+- [x] optimizing text rendering
+- [] making a main menu
+- [] making credits menu
