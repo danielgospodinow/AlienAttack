@@ -1,5 +1,6 @@
-- [x] scene oriented system
-- [x] text rendering system with smart text resizing
-- [x] optimizing text rendering
-- [] making a main menu
-- [] making credits menu
+- [x] set a window icon
+- [x] build a scene oriented system
+- [x] build a text rendering system with smart text resizing
+- [x] optimize text rendering
+- [ ] make a main menu
+- [ ] make credits menu
