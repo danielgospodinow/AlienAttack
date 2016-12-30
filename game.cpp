@@ -16,6 +16,7 @@ Game::~Game()
 {
     delete _sdlComponents;
     delete _gameUtils;
+    clearScenes();
 }
 
 void Game::startGame()

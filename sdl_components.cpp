@@ -1,5 +1,9 @@
 #include "sdl_components.hpp"
 
+SDL_Window* SDL_Components::_window = NULL;
+SDL_Renderer* SDL_Components::_renderer = NULL;
+SDL_Event* SDL_Components::_event = NULL;
+
 SDL_Components::SDL_Components()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);

@@ -9,15 +9,15 @@ public:
     SDL_Components();
     ~SDL_Components();
 
-    SDL_Window* getWindow() {return _window;}
-    SDL_Renderer* getRenderer() {return _renderer;}
-    SDL_Event* getEvent() {return _event;}
+    static SDL_Window* const getWindow() {return _window;}
+    static SDL_Renderer* const getRenderer() {return _renderer;}
+    static SDL_Event* const getEvent() {return _event;}
     static void killApp() { TTF_Quit(); SDL_Quit(); exit(0); }
 
 private:
-    SDL_Window* _window;
-    SDL_Renderer* _renderer;
-    SDL_Event* _event;
+    static SDL_Window* _window;
+    static SDL_Renderer* _renderer;
+    static SDL_Event* _event;
 };
 
 #endif

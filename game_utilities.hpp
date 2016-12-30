@@ -8,14 +8,17 @@ class GameUtilities
 {
 public:
     GameUtilities(SDL_Components* sdlComponents);
+    ~GameUtilities() {TTF_CloseFont(_font); SDL_FreeSurface(_surfaceMessage); SDL_DestroyTexture(_message);}
     void printText(const char *text, Colors color, Vec2 textLocation, Vec2 textSize);
     SDL_Texture* getText(const char *text, Colors color);
-    void renderText(SDL_Texture* texture, Vec2 pos, Vec2 size);
+    void renderText(SDL_Texture* texture, SDL_Rect rect, Vec2 offset);
+    static TTF_Font* const getFont() {return _font;}
+    static int getStrLen(const char* str);
 
 private:
     SDL_Components* _sdlComponents;
 
-    TTF_Font* _font;
+    static TTF_Font* _font;
     SDL_Surface* _surfaceMessage;
     SDL_Texture* _message;
 };

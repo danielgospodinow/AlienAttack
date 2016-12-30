@@ -2,7 +2,8 @@
 #define SCENE_HPP
 
 #include "globals.hpp"
-#include "game_utilities.hpp"
+#include "button.hpp"
+#include "label.hpp"
 
 class Scene
 {

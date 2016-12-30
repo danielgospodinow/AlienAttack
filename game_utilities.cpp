@@ -1,9 +1,10 @@
 #include "game_utilities.hpp"
 
-GameUtilities::GameUtilities(SDL_Components* sdlComponents)
-{
-    _sdlComponents = sdlComponents;
+TTF_Font* GameUtilities::_font = NULL;
 
+GameUtilities::GameUtilities(SDL_Components* sdlComponents):
+    _sdlComponents(sdlComponents)
+{
     _font = TTF_OpenFont("fonts/raidercrusader.ttf", 24);
     _surfaceMessage = NULL;
     _message = NULL;
@@ -54,8 +55,20 @@ SDL_Texture* GameUtilities::getText(const char *text, Colors color)
     return _message;
 }
 
-void GameUtilities::renderText(SDL_Texture* texture, Vec2 pos, Vec2 size)
+void GameUtilities::renderText(SDL_Texture* texture, SDL_Rect rect, Vec2 offset)
 {
-    SDL_Rect rect = {pos.x, pos.y, size.x, size.y};
+    rect.x += offset.x;
+    rect.y += offset.y;
     SDL_RenderCopy(_sdlComponents->getRenderer(), texture, NULL, &rect);
+}
+
+int GameUtilities::getStrLen(const char *str)
+{
+    int lenght = 0;
+    while(*str)
+    {
+        lenght += 1;
+        str += 1;
+    }
+    return lenght;
 }

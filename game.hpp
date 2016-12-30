@@ -1,9 +1,6 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "globals.hpp"
-#include "sdl_components.hpp"
-#include "game_utilities.hpp"
 #include "scene.hpp"
 
 class Game

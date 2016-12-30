@@ -4,8 +4,8 @@ LINKER_FLAGS = -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lpthread
 
 all: alienAttack clean_o
 
-alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o 
-			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o  -o AlienAttack $(LINKER_FLAGS)
+alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o
+			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o -o AlienAttack $(LINKER_FLAGS)
 
 
 main.o: main.cpp
@@ -18,8 +18,10 @@ game_utilities.o: game_utilities.cpp
 			$(CC) $(CFLAGS) game_utilities.cpp
 main_menu_scene.o: main_menu_scene.cpp
 			$(CC) $(CFLAGS) main_menu_scene.cpp
-
-
+button.o:	button.cpp
+			$(CC) $(CFLAGS) button.cpp
+label.o:	label.cpp
+			$(CC) $(CFLAGS) label.cpp
 clean:
 			rm -rf *.o AlienAttack
 clean_o:

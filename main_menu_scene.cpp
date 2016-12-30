@@ -2,27 +2,35 @@
 
 MainMenuScene::MainMenuScene(GameUtilities *gameUtils): Scene(gameUtils)
 {
-    float labelHeightProportion = 1 / 14.0;
+    _introLabel = new Label("Welcome to Alien Attack!", Vec2(globals::SCREEN_CENTER.x, 0), Colors::White, 7);
+    _introLabel->setOffset(Vec2(0, -_introLabel->getRect().y * 3));
 
-    _introLabel = _gameUtils->getText("Welcome to Alien Attack!", Colors::White);
-    _introTextSize = Vec2(globals::GAME_WIDTH * 0.8f, 0);
-    _introTextSize.y = _introTextSize.x * labelHeightProportion;
-    _introTextPos = Vec2(globals::GAME_WIDTH/2 - _introTextSize.x/2, globals::GAME_HEIGHT * 0.15f);
+    _creditsLabel = new Label("Developed by Daniel Gospodinow - 81531", Vec2(globals::GAME_WIDTH, globals::GAME_HEIGHT), Colors::White, 2);
+    _creditsLabel->setOffset(Vec2(-_creditsLabel->getRect().w / 1.8f, -_creditsLabel->getRect().h * 1.5f));
 
-    _creditsLabel = _gameUtils->getText("Developed by Daniel Gospodinow - 81531", Colors::Red);
-    _creditsTextSize = Vec2(200, 0);
-    _creditsTextSize.y = _creditsTextSize.x * labelHeightProportion;
-    _creditsTextPos = Vec2(globals::GAME_WIDTH - _creditsTextSize.x * 1.02f, globals::GAME_HEIGHT - _creditsTextSize.y * 1.1f);
+    //_playSPButton = new Button(new Label(), _gameUtils);
+//    _playMPButton = new Button();
+//    _creditialsButton = new Button();
+//    _exitButton = new Button();
 }
 
 MainMenuScene::~MainMenuScene()
 {
-    SDL_DestroyTexture(_introLabel);
-    SDL_DestroyTexture(_creditsLabel);
+    delete _introLabel;
+    delete _creditsLabel;
+    delete _creditialsButton;
+    delete _playSPButton;
+    delete _playMPButton;
+    delete _exitButton;
 }
 
 void MainMenuScene::update()
 {
-    _gameUtils->renderText(_introLabel, _introTextPos, _introTextSize);
-    _gameUtils->renderText(_creditsLabel, _creditsTextPos, _creditsTextSize);
+    _gameUtils->renderText(_introLabel->getTexture(), _introLabel->getRect(), _introLabel->getOffset());
+    _gameUtils->renderText(_creditsLabel->getTexture(), _creditsLabel->getRect(), _creditsLabel->getOffset());
+
+//    _playSPButton->update();
+//    _playMPButton->update();
+//    _creditialsButton->update();
+//    _exitButton->update();
 }
