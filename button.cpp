@@ -8,5 +8,5 @@ Button::Button(Label* label, GameUtilities* gameUtils):
 
 void Button::update()
 {
-    _gameUtils->renderText(_label->getTexture(), _label->getRect(), Vec2(0, 0));
+    _gameUtils->renderText(_label->getTexture(), _label->getRect(), _label->getOffset());
 }

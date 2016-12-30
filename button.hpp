@@ -9,6 +9,7 @@ public:
     Button(Label* label, GameUtilities *gameUtils);
     ~Button() {delete _label;}
     void update();
+    Label* getLabel() {return _label;}
 private:
     Label* _label;
     GameUtilities* _gameUtils;

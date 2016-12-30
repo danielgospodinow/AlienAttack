@@ -8,10 +8,13 @@ MainMenuScene::MainMenuScene(GameUtilities *gameUtils): Scene(gameUtils)
     _creditsLabel = new Label("Developed by Daniel Gospodinow - 81531", Vec2(globals::GAME_WIDTH, globals::GAME_HEIGHT), Colors::White, 2);
     _creditsLabel->setOffset(Vec2(-_creditsLabel->getRect().w / 1.8f, -_creditsLabel->getRect().h * 1.5f));
 
-    //_playSPButton = new Button(new Label(), _gameUtils);
-//    _playMPButton = new Button();
-//    _creditialsButton = new Button();
-//    _exitButton = new Button();
+    _playSPButton = new Button(new Label("Single-player", Vec2(globals::SCREEN_CENTER), Colors::Red, 5), _gameUtils);
+    _playSPButton->getLabel()->setOffset(Vec2(0, (_playSPButton->getLabel()->getRect().h * -2)));
+
+    _playMPButton = new Button(new Label("Multiplayer", Vec2(globals::SCREEN_CENTER), Colors::Red, 5), _gameUtils);
+
+    _creditialsButton = new Button(new Label("Credits", Vec2(globals::SCREEN_CENTER), Colors::Red, 5), _gameUtils);
+    _creditialsButton->getLabel()->setOffset(Vec2(0, (_creditialsButton->getLabel()->getRect().h * 2)));
 }
 
 MainMenuScene::~MainMenuScene()
@@ -21,7 +24,6 @@ MainMenuScene::~MainMenuScene()
     delete _creditialsButton;
     delete _playSPButton;
     delete _playMPButton;
-    delete _exitButton;
 }
 
 void MainMenuScene::update()
@@ -29,8 +31,7 @@ void MainMenuScene::update()
     _gameUtils->renderText(_introLabel->getTexture(), _introLabel->getRect(), _introLabel->getOffset());
     _gameUtils->renderText(_creditsLabel->getTexture(), _creditsLabel->getRect(), _creditsLabel->getOffset());
 
-//    _playSPButton->update();
-//    _playMPButton->update();
-//    _creditialsButton->update();
-//    _exitButton->update();
+    _playSPButton->update();
+    _playMPButton->update();
+    _creditialsButton->update();
 }

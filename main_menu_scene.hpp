@@ -17,7 +17,6 @@ private:
     Button* _playSPButton;
     Button* _playMPButton;
     Button* _creditialsButton;
-    Button* _exitButton;
 };
 
 #endif
