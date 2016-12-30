@@ -2,6 +2,7 @@
 #define MAINMENUSCENE_HPP
 
 #include "scene.hpp"
+#include "game.hpp"
 
 class MainMenuScene : public Scene
 {
