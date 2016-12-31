@@ -16,7 +16,6 @@ private:
     GameUtilities* _gameUtils;
     std::function<void()> _func;
 
-    Vec2 _mouseCoords;
     bool _clickedOnce;
 };
 
