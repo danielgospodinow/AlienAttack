@@ -18,6 +18,7 @@ public:
     SDL_Rect getRect() {return _rect;}
     void setOffset(Vec2 offset) {_offset = offset;}
     Vec2 getOffset () {return _offset;}
+    void changeLabelColor(Colors color);
 
 private:
     SDL_Texture* _texture;

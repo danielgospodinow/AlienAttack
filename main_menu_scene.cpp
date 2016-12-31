@@ -8,12 +8,12 @@ MainMenuScene::MainMenuScene(GameUtilities *gameUtils): Scene(gameUtils)
     _creditsLabel = new Label("Developed by Daniel Gospodinow - 81531", Vec2(globals::GAME_WIDTH, globals::GAME_HEIGHT), Colors::White, 2);
     _creditsLabel->setOffset(Vec2(-_creditsLabel->getRect().w / 1.8f, -_creditsLabel->getRect().h * 1.5f));
 
-    _playSPButton = new Button(new Label("Single-player", Vec2(globals::SCREEN_CENTER), Colors::Red, 5), _gameUtils, [&]() { /* IMPLEMENT */ });
+    _playSPButton = new Button(new Label("Single-player", Vec2(globals::SCREEN_CENTER), Colors::White, 5), _gameUtils, []() { cout << "You clicked Single-Player" << endl; });
     _playSPButton->getLabel()->setOffset(Vec2(0, (_playSPButton->getLabel()->getRect().h * -2)));
 
-    _playMPButton = new Button(new Label("Multiplayer", Vec2(globals::SCREEN_CENTER), Colors::Red, 5), _gameUtils, [&]() { /* IMPLEMENT */ });
+    _playMPButton = new Button(new Label("Multiplayer", Vec2(globals::SCREEN_CENTER), Colors::White, 5), _gameUtils, []() { cout << "You clicked Multiplayer" << endl; });
 
-    _creditialsButton = new Button(new Label("Credits", Vec2(globals::SCREEN_CENTER), Colors::Red, 5), _gameUtils, [&]() { /* IMPLEMENT */ });
+    _creditialsButton = new Button(new Label("Credits", Vec2(globals::SCREEN_CENTER), Colors::White, 5), _gameUtils, []() { cout << "You clicked Credits" << endl; });
     _creditialsButton->getLabel()->setOffset(Vec2(0, (_creditialsButton->getLabel()->getRect().h * 2)));
 }
 
