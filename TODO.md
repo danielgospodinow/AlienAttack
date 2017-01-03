@@ -10,8 +10,9 @@
 - [x] build the controls
 - [x] implement shooting
 - [ ] fix the bug with the scene swapping option
-- [ ] add enemies
-- [ ] add enemy movement and attacking
+- [x] add enemies
+- [x] make enemy horde
+- [x] add enemy movement and attacking
 - [ ] add score board and health bar
 - [ ] add two players option
 - [ ] add two players option with an AI option for one of the players

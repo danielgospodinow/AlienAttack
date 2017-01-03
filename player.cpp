@@ -38,8 +38,6 @@ void Player::drawAndUpdate(float deltaTime)
 {
     _shootDelayTimer += 1 * deltaTime;
 
-    _sprite->draw();
-
     for (Uint32 i=0; i < _bullets.size(); i++)
     {
         Bullet* currentBullet = _bullets[i];
@@ -53,6 +51,8 @@ void Player::drawAndUpdate(float deltaTime)
 
         currentBullet->update(deltaTime);
     }
+
+    _sprite->draw();
 }
 
 void Player::shoot()

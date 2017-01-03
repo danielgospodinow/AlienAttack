@@ -5,6 +5,7 @@
 #include "sprite.hpp"
 #include "player.hpp"
 #include "game.hpp"
+#include "enemy_horde.hpp"
 
 class PlaySPScene : public Scene
 {
@@ -22,6 +23,8 @@ private:
     long _now;
     long _last;
     float _deltaTime;
+
+    EnemyHorde* _enemyHorde;
 };
 
 #endif

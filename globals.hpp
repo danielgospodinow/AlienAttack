@@ -11,6 +11,7 @@
 #include <stack>
 #include <vector>
 #include <functional>
+#include <random>
 
 using namespace std;
 
@@ -34,10 +35,12 @@ namespace globals
     const float LABEL_WIDTH_SCALER = 20 * LABEL_SCALER;
     const float LABEL_HEIGHT_SCALER = 30 * LABEL_SCALER;
 
-    const int ENEMY_SPRITE_SIZE = 30;
     const int PLAYER_SPRITE_SIZE_X = 49;
     const int PLAYER_SPRITE_SIZE_Y = 30;
     const int PLAYER_SPEED_PPS = 100;
+
+    const int ENEMY_HORDE_WIDTH = 10;
+    const int ENEMY_HORDE_HEIGHT = 5;
 }
 
 #endif

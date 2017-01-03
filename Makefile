@@ -4,8 +4,8 @@ LINKER_FLAGS = -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lpthread
 
 all: alienAttack clean_o
 
-alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o
-			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o -o AlienAttack $(LINKER_FLAGS)
+alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o
+			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o -o AlienAttack $(LINKER_FLAGS)
 
 
 main.o: main.cpp
@@ -30,6 +30,10 @@ player.o:	player.cpp
 			$(CC) $(CFLAGS) player.cpp
 bullet.o:	bullet.cpp
 			$(CC) $(CFLAGS) bullet.cpp
+enemy.o:	enemy.cpp
+			$(CC) $(CFLAGS) enemy.cpp
+enemy_horde.o:	enemy_horde.cpp
+			$(CC) $(CFLAGS) enemy_horde.cpp
 
 
 clean:

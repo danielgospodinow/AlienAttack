@@ -7,7 +7,7 @@
 class Bullet
 {
 public:
-    Bullet(Sprite* sprite, Vec2 pos);
+    Bullet(Sprite* sprite, Vec2 pos, bool travelUp = true);
     ~Bullet();
     void update(float deltaTime);
     bool isDestroyed() {return _isDestroyed;}
@@ -18,6 +18,7 @@ private:
     Sprite* _sprite;
     Vec2 _pos;
     bool _isDestroyed;
+    bool _travelUp;
 };
 
 #endif

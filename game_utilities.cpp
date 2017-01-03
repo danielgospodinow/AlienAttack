@@ -72,3 +72,25 @@ int GameUtilities::getStrLen(const char *str)
     }
     return lenght;
 }
+
+int GameUtilities::getRandomNumber(int startRange, int endRange)
+{
+    std::random_device rd;
+    std::mt19937 eng(rd());
+    std::uniform_int_distribution<> distr(startRange, endRange);
+
+    return distr(eng);
+}
+
+//bool GameUtilities::areColliding(SDL_Rect one, SDL_Rect two)
+//{
+//    if(!(one.x <= two.x))
+//    {
+//        SDL_Rect temp = one;
+//        one = two;
+//        two = temp;
+//    }
+
+//    if((one.x + one.w < two.x) && (two.y + two.h >= one.y && two.y < one.y + one.h))
+//        return true;
+//}

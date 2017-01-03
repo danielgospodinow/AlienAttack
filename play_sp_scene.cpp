@@ -15,11 +15,14 @@ PlaySPScene::PlaySPScene(GameUtilities* gameUtils) : Scene(gameUtils)
     _deltaTime = 0;
     _now = 0;
     _last = 0;
+
+    _enemyHorde = new EnemyHorde(Vec2(0, 50));
 }
 
 PlaySPScene::~PlaySPScene()
 {
     delete _player;
+    delete _enemyHorde; // <--- Problemno
 }
 
 void PlaySPScene::update()
@@ -72,4 +75,6 @@ void PlaySPScene::update()
         _player->shoot();
 
     _player->drawAndUpdate(_deltaTime);
+
+    _enemyHorde->update(_deltaTime);
 }
