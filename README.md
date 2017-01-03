@@ -1,2 +1,12 @@
-# AlienAttack
-[C++] Single-player and Multiplayer arcade game similar to Space Invaders
+# AlienAttack <img src="http://i.imgur.com/7RmahSt.png" width="20" height = "20">
+Single-player and Multiplayer arcade game similar to **Space Invaders** made with 
+C++ and SDL
+
+######Development screenshots:
+<p align="center">
+  <img src = "http://i.imgur.com/jONgFuv.png"/>
+</p>
+<p align="center">
+  <img src = "http://i.imgur.com/IxwZSGN.png"/>
+</p>
+

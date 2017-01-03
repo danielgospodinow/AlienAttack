@@ -1,0 +1,18 @@
+- [x] make an abstraction of SDL and the basic skeleton of the game
+- [x] build basic tools and utilities
+- [x] set a window icon
+- [x] build a scene oriented system
+- [x] build a text rendering system with smart text resizing
+- [x] optimize text rendering
+- [x] make a main menu
+- [ ] make credits menu
+- [x] make a play scene with the player ship
+- [x] build the controls
+- [x] implement shooting
+- [ ] fix the bug with the scene swapping option
+- [x] add enemies
+- [x] make enemy horde
+- [x] add enemy movement and attacking
+- [ ] add score board and health bar
+- [ ] add two players option
+- [ ] add two players option with an AI option for one of the players
