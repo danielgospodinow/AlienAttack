@@ -6,8 +6,10 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
+#include <algorithm>
 #include <iostream>
 #include <stack>
+#include <vector>
 #include <functional>
 
 using namespace std;
@@ -31,6 +33,11 @@ namespace globals
     const float LABEL_SCALER = 0.2f;
     const float LABEL_WIDTH_SCALER = 20 * LABEL_SCALER;
     const float LABEL_HEIGHT_SCALER = 30 * LABEL_SCALER;
+
+    const int ENEMY_SPRITE_SIZE = 30;
+    const int PLAYER_SPRITE_SIZE_X = 49;
+    const int PLAYER_SPRITE_SIZE_Y = 30;
+    const int PLAYER_SPEED_PPS = 100;
 }
 
 #endif

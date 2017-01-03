@@ -50,7 +50,7 @@ void Game::popScene()
 
     Scene* poppedScene = _scenesStack.top();
     _scenesStack.pop();
-    delete poppedScene;
+    delete poppedScene; // <-- Problemno
 }
 
 void Game::clearScenes()

@@ -3,6 +3,7 @@
 
 #include "scene.hpp"
 #include "game.hpp"
+#include "play_sp_scene.hpp"
 
 class MainMenuScene : public Scene
 {
