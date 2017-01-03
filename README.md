@@ -9,4 +9,6 @@ C++ and SDL
 <p align="center">
   <img src = "http://i.imgur.com/IxwZSGN.png"/>
 </p>
-
+<p align="center">
+  <img src = "http://i.imgur.com/IpjjElX.png"/>
+</p>
