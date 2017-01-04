@@ -11,6 +11,7 @@ public:
     ~Bullet();
     void update(float deltaTime);
     bool isDestroyed() {return _isDestroyed;}
+    void destroy() {_isDestroyed = true;}
     void setPosition(Vec2 pos);
     Sprite* getSprite() {return _sprite;}
 

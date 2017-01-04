@@ -29,7 +29,63 @@ EnemyHorde::~EnemyHorde()
                 delete currentEnemy;
         }
     }
+
+    for(Uint32 i=0; i<_hordeBullets.size(); i++)
+    {
+        Bullet* bul = _hordeBullets.at(i);
+        if(bul)
+            delete bul;
+    }
 }
+
+void EnemyHorde::update(float deltaTime)
+{
+    _moveTimer += 1 * deltaTime;
+    _shootTimer += 1 * deltaTime;
+
+    if(_shootTimer > _shootTime)
+    {
+        hordeShoot();
+        _shootTime = GameUtilities::getRandomNumber(1, 6);
+        _shootTimer = 0;
+    }
+    if(_moveTimer > _moveTime)
+    {
+        _moveTimer = 0;
+        moveHorde();
+    }
+
+    Enemy* currentEnemy = NULL;
+
+    for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
+    {
+        for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
+        {
+            currentEnemy = _enemyHorde[i][j];
+
+            if(!currentEnemy)
+                continue;
+
+            if(currentEnemy->isDead())
+            {
+                delete currentEnemy;
+                _enemyHorde[i][j] = NULL;
+                continue;
+            }
+
+            currentEnemy->update(deltaTime);
+        }
+    }
+
+    for(Uint32 i=0; i<_hordeBullets.size(); i++)
+    {
+        Bullet* bul = _hordeBullets.at(i);
+        bul->update(deltaTime);
+    }
+
+    checkHordeCollision();
+}
+
 
 void EnemyHorde::initHorde()
 {
@@ -49,43 +105,64 @@ void EnemyHorde::initHorde()
     }
 }
 
-void EnemyHorde::update(float deltaTime)
+void EnemyHorde::checkHordeCollision()
 {
-    _moveTimer += 1 * deltaTime;
-    _shootTimer += 1 * deltaTime;
-
-    if(_moveTimer > _moveTime)
-    {
-        _moveTimer = 0;
-        moveHorde();
-    }
-    if(_shootTimer > _shootTime)
-    {
-        hordeShoot();
-        _shootTime = GameUtilities::getRandomNumber(1, 6);
-        _shootTimer = 0;
-    }
-
-    Enemy* currentEnemy = NULL;
+    std::vector<Bullet*> playerBullets = Player::getBullets();
 
     for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
     {
         for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
         {
-            currentEnemy = _enemyHorde[i][j];
-
-            if(!currentEnemy)
+            if(!_enemyHorde[i][j])
                 continue;
 
-            if(currentEnemy->isDead())
+            for(Uint32 k=0; k<playerBullets.size(); k++)
             {
-                delete currentEnemy;
-                currentEnemy = NULL;
-            }
+                Bullet* playerBullet = playerBullets.at(k);
 
-            currentEnemy->update(deltaTime);
+                if(GameUtilities::areColliding(_enemyHorde[i][j]->getSize(), playerBullet->getSprite()->getPosnsizeRect()))
+                {
+                    _enemyHorde[i][j]->die();
+                    playerBullet->destroy();
+                }
+            }
         }
     }
+}
+
+bool EnemyHorde::isCollidingWithPlayer(Vec2 playerPos)
+{
+    for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
+    {
+        for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
+        {
+            if(!_enemyHorde[i][j])
+                continue;
+
+            if(GameUtilities::areColliding(_enemyHorde[i][j]->getSize(), {playerPos.x, playerPos.y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
+                return true;
+        }
+    }
+
+    return false;
+}
+
+bool EnemyHorde::isABulletColliding(SDL_Rect posnrect)
+{
+    Bullet* currentBullet = NULL;
+
+    for(Uint32 i=0; i<_hordeBullets.size(); i++)
+    {
+        currentBullet = _hordeBullets.at(i);
+        if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), {posnrect.x, posnrect.y, posnrect.w, posnrect.h}))
+        {
+            _hordeBullets.erase(std::remove(_hordeBullets.begin(), _hordeBullets.end(), currentBullet), _hordeBullets.end());
+            delete currentBullet;
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void EnemyHorde::moveHorde()
@@ -119,6 +196,9 @@ void EnemyHorde::moveHorde()
     {
         for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
         {
+            if(!_enemyHorde[i][j])
+                continue;
+
             if(i <= globals::ENEMY_HORDE_HEIGHT / 2 - 1)
                 _enemyHorde[i][j]->setPosition(_pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Radkata));
 
@@ -139,7 +219,7 @@ void EnemyHorde::hordeShoot()
 
         for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
         {
-            if(!_enemyHorde[i][j])
+            if(!_enemyHorde[i][j] || (i < globals::ENEMY_HORDE_HEIGHT - 1 && _enemyHorde[i + 1][j]))
                 continue;
 
             avaivableShooters.push_back(j);
@@ -149,8 +229,7 @@ void EnemyHorde::hordeShoot()
             continue;
 
         int shooterIndex = avaivableShooters.at(GameUtilities::getRandomNumber(0, avaivableShooters.size() - 1));
-        _enemyHorde[i][shooterIndex]->shoot();
-        break;
+        _hordeBullets.push_back(new Bullet(new Sprite("sprites/enemyBullet.png", {0, 0, 4, 25}), _enemyHorde[i][shooterIndex]->getPosition() + Vec2(_enemyHorde[i][shooterIndex]->getSize().w/2, _enemyHorde[i][shooterIndex]->getSize().h), false));
     }
 }
 

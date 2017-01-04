@@ -16,3 +16,4 @@
 - [ ] add score board and health bar
 - [ ] add two players option
 - [ ] add two players option with an AI option for one of the players
+- [ ] fix the speed of the game

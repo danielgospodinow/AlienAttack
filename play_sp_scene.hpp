@@ -25,6 +25,8 @@ private:
     float _deltaTime;
 
     EnemyHorde* _enemyHorde;
+    Label* _youLoseLabel;
+    Sprite* _barricads[globals::BARRICADES_SIZE];
 };
 
 #endif

@@ -59,7 +59,7 @@ void GameUtilities::renderText(SDL_Texture* texture, SDL_Rect rect, Vec2 offset)
 {
     rect.x += offset.x;
     rect.y += offset.y;
-    SDL_RenderCopy(_sdlComponents->getRenderer(), texture, NULL, &rect);
+    SDL_RenderCopy(SDL_Components::getRenderer(), texture, NULL, &rect);
 }
 
 int GameUtilities::getStrLen(const char *str)
@@ -82,15 +82,16 @@ int GameUtilities::getRandomNumber(int startRange, int endRange)
     return distr(eng);
 }
 
-//bool GameUtilities::areColliding(SDL_Rect one, SDL_Rect two)
-//{
-//    if(!(one.x <= two.x))
-//    {
-//        SDL_Rect temp = one;
-//        one = two;
-//        two = temp;
-//    }
+bool GameUtilities::areColliding(SDL_Rect one, SDL_Rect two)
+{
+    if(!(one.x <= two.x))
+    {
+        SDL_Rect temp = one;
+        one = two;
+        two = temp;
+    }
 
-//    if((one.x + one.w < two.x) && (two.y + two.h >= one.y && two.y < one.y + one.h))
-//        return true;
-//}
+    if((one.x + one.w > two.x) && (two.y + two.h >= one.y && two.y < one.y + one.h))
+        return true;
+    return false;
+}

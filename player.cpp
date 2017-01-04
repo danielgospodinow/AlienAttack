@@ -1,15 +1,25 @@
 #include "player.hpp"
 
+vector<Bullet*> Player::_bullets;
+
 Player::Player(Sprite* sprite, Vec2 pos):
     _sprite(sprite), _pos(pos)
 {
     _shootDelay = 0.7f;
     _shootDelayTimer = 0;
+    _isAlive = true;
 }
 
 Player::~Player()
 {
     delete _sprite;
+
+    for(Uint32 i=0; i<_bullets.size(); i++)
+    {
+        Bullet* currentBullet = _bullets.at(i);
+        if(currentBullet)
+            delete currentBullet;
+    }
 }
 
 void Player::moveLeft(float deltaTime)

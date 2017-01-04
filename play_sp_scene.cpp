@@ -17,12 +17,26 @@ PlaySPScene::PlaySPScene(GameUtilities* gameUtils) : Scene(gameUtils)
     _last = 0;
 
     _enemyHorde = new EnemyHorde(Vec2(0, 50));
+
+    _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 6);
+
+    for(int i=0; i<globals::BARRICADES_SIZE; i++)
+        _barricads[i] = new Sprite("sprites/currentSprites.png", {globals::GAME_WIDTH - (i+1) * 180, _player->getPosition().y - 90, 100, 75}, {47, 487, 176, 128});
 }
 
 PlaySPScene::~PlaySPScene()
 {
+    delete _enemyHorde;
     delete _player;
-    delete _enemyHorde; // <--- Problemno
+    delete _youLoseLabel;
+
+    for(int i=0; i<globals::BARRICADES_SIZE; i++)
+    {
+        if(!_barricads[i])
+            continue;
+
+        delete _barricads[i];
+    }
 }
 
 void PlaySPScene::update()
@@ -53,6 +67,7 @@ void PlaySPScene::update()
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_ESCAPE)
         {
             Game::popScene();
+            return;
         }
     }
     else if(SDL_Components::getEvent()->type == SDL_KEYUP)
@@ -66,6 +81,62 @@ void PlaySPScene::update()
             _isPlayerShooting = false;
     }
 
+    if(!_player)
+    {
+        GameUtilities::renderText(_youLoseLabel->getTexture(), _youLoseLabel->getRect(), _youLoseLabel->getOffset());
+        return;
+    }
+    else if(!_player->isAlive())
+    {
+        delete _player;
+        _player = NULL;
+        delete _enemyHorde;
+        _enemyHorde = NULL;
+        for(int i=0; i<4; i++)
+        {
+            if(!_barricads[i])
+                continue;
+
+            delete _barricads[i];
+            _barricads[i] = NULL;
+        }
+        return;
+    }
+
+    for(int i=0; i<globals::BARRICADES_SIZE; i++)
+    {
+        if(!_barricads[i])
+            continue;
+
+        auto damageBarricade = [&]()
+        {
+            if(_barricads[i]->getAlpha() <= 0)
+            {
+                delete _barricads[i];
+                _barricads[i] = NULL;
+            }
+
+            if(_barricads[i])
+                _barricads[i]->setAlpha(_barricads[i]->getAlpha() - 10);
+        };
+
+        if(_enemyHorde->isABulletColliding(_barricads[i]->getPosnsizeRect()))
+            damageBarricade();
+
+        for(Uint32 j=0; j<Player::getBullets().size(); j++)
+        {
+            Bullet* currentBullet = Player::getBullets().at(j);
+            if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _barricads[i]->getPosnsizeRect()))
+            {
+                currentBullet->destroy();
+                damageBarricade();
+            }
+        }
+    }
+
+    if(_enemyHorde->isCollidingWithPlayer(_player->getPosition()) || _enemyHorde->isABulletColliding({_player->getPosition().x, _player->getPosition().y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
+        _player->kill();
+
     if(_isPlayerMovingLeft)
         _player->moveLeft(_deltaTime);
     else if(_isPlayerMovingRight)
@@ -77,4 +148,8 @@ void PlaySPScene::update()
     _player->drawAndUpdate(_deltaTime);
 
     _enemyHorde->update(_deltaTime);
+
+    for(int i=0; i<globals::BARRICADES_SIZE; i++)
+        if(_barricads[i])
+            _barricads[i]->draw();
 }

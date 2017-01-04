@@ -23,12 +23,18 @@ public:
 
     void drawAndUpdate(float deltaTime);
 
+    static std::vector<Bullet*> getBullets() {return _bullets;}
+
+    void kill() {_isAlive = false;}
+    bool isAlive() {return _isAlive;}
+
 private:
+    static std::vector<Bullet*> _bullets;
     Sprite* _sprite;
     Vec2 _pos;
-    std::vector<Bullet*> _bullets;
     float _shootDelay;
     float _shootDelayTimer;
+    bool _isAlive;
 };
 
 #endif

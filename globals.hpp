@@ -12,6 +12,8 @@
 #include <vector>
 #include <functional>
 #include <random>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -41,6 +43,8 @@ namespace globals
 
     const int ENEMY_HORDE_WIDTH = 10;
     const int ENEMY_HORDE_HEIGHT = 5;
+
+    const int BARRICADES_SIZE = 4;
 }
 
 #endif

@@ -29,17 +29,20 @@ public:
 	void setTexture(SDL_Texture* texture);
 	void setCropRect(SDL_Rect cropRect);
 	void setPosnsizeRect(SDL_Rect posnsizeRect);
+    void setAlpha(int alpha);
 
 	SDL_Texture* getTexture();
 	SDL_Rect getCropRect();
 	SDL_Rect getPosnsizeRect();
     Vec2 getPosition();
+    int getAlpha() {return _alpha;}
 
 private:
 	SDL_Texture* _texture;
 	SDL_Rect _cropRect;
 	SDL_Rect _posnsizeRect;
     Vec2 _position;
+    int _alpha;
 };
 
 #endif

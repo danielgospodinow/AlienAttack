@@ -26,13 +26,6 @@ Enemy::~Enemy()
 {
     delete _sprite01;
     delete _sprite02;
-
-    for(int i=_bullets.size() - 1; i>=0; i--)
-    {
-        Bullet* currentBullet = _bullets.at(i);
-        _bullets.pop_back();
-        delete currentBullet;
-    }
 }
 
 void Enemy::update(float deltaTime)
@@ -51,12 +44,4 @@ void Enemy::update(float deltaTime)
         _sprite01->draw();
     else
         _sprite02->draw();
-
-    for(Bullet* bul: _bullets)
-        bul->update(deltaTime);
-}
-
-void Enemy::shoot()
-{
-    _bullets.push_back(new Bullet(new Sprite("sprites/enemyBullet.png", {0, 0, 4, 25}), _pos + Vec2(_sizeRect.w/2, _sizeRect.h), false));
 }

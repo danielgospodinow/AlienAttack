@@ -2,7 +2,7 @@
 #define ENEMY_HPP
 
 #include "globals.hpp"
-#include "bullet.hpp"
+#include "sprite.hpp"
 
 enum EnemyTypes {Radkata, Sashkata, Kirkata, Genio};
 
@@ -13,10 +13,12 @@ public:
     ~Enemy();
     void update(float deltaTime);
 
-    void setPosition (Vec2 pos) {_pos = pos;}
-    void shoot();
+    void setPosition (Vec2 pos) {_pos = pos; _sizeRect.x = pos.x; _sizeRect.y = pos.y;}
+    Vec2 getPosition() {return _pos;}
+    SDL_Rect getSize() {return _sizeRect;}
     void die() {_isHit = true;}
     bool isDead() {return _isHit;}
+    EnemyTypes getType() {return _enemyType;}
 
 private:
     Sprite* _sprite01;
@@ -35,8 +37,6 @@ private:
     float _spriteTransitionTimer;
     float _spriteTransitionTime;
     bool _isSpriteState01;
-
-    vector<Bullet*> _bullets;
 };
 
 #endif
