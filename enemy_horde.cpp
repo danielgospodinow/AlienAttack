@@ -1,4 +1,5 @@
 #include "enemy_horde.hpp"
+#include "play_sp_scene.hpp"
 
 EnemyHorde::EnemyHorde(Vec2 startPos):
     _pos(startPos)
@@ -122,6 +123,14 @@ void EnemyHorde::checkHordeCollision()
 
                 if(GameUtilities::areColliding(_enemyHorde[i][j]->getSize(), playerBullet->getSprite()->getPosnsizeRect()))
                 {
+                    switch (_enemyHorde[i][j]->getType())
+                    {
+                    case Radkata: PlaySPScene::setScore(PlaySPScene::getScore() + 30); break;
+                    case Sashkata:PlaySPScene::setScore(PlaySPScene::getScore() + 20); break;
+                    case Kirkata:PlaySPScene::setScore(PlaySPScene::getScore() + 10); break;
+                    case Genio: break;
+                    }
+
                     _enemyHorde[i][j]->die();
                     playerBullet->destroy();
                 }

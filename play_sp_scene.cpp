@@ -1,5 +1,8 @@
 #include "play_sp_scene.hpp"
 
+int PlaySPScene::_score = 0;
+bool PlaySPScene::_labelUpToDate = true;
+
 PlaySPScene::PlaySPScene(GameUtilities* gameUtils) : Scene(gameUtils)
 {
     Sprite* playerSprite = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64});
@@ -18,17 +21,29 @@ PlaySPScene::PlaySPScene(GameUtilities* gameUtils) : Scene(gameUtils)
 
     _enemyHorde = new EnemyHorde(Vec2(0, 50));
 
-    _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 6);
+    _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 8);
 
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
         _barricads[i] = new Sprite("sprites/currentSprites.png", {globals::GAME_WIDTH - (i+1) * 180, _player->getPosition().y - 90, 100, 75}, {47, 487, 176, 128});
+
+    _specialEnemy = new SpecialMonster(GameUtilities::getRandomNumber(0, 1));
+
+    _scoreTextLabel = new Label("Score: ", Vec2(0, 0), Colors::White, 3);
+    _scoreTextLabel->setOffset(Vec2(_scoreTextLabel->getRect().w / 1.9f, _scoreTextLabel->getRect().h * 0.8f));
+    _scoreNumLabel = new Label("0", Vec2(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::White, 3);
 }
 
 PlaySPScene::~PlaySPScene()
 {
-    delete _enemyHorde;
-    delete _player;
+    if(_enemyHorde)
+        delete _enemyHorde;
+    if(_player)
+        delete _player;
+    if(_specialEnemy)
+        delete _specialEnemy;
     delete _youLoseLabel;
+    delete _scoreTextLabel;
+    delete _scoreNumLabel;
 
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
     {
@@ -41,13 +56,27 @@ PlaySPScene::~PlaySPScene()
 
 void PlaySPScene::update()
 {
+    handleDeltaTime();
+    if(!handleInput()) return;
+    if(!handleDeadPlayer()) return;
+    handleBarricades();
+    handleSpecialEnemy();
+    handlePlayer();
+    handleUpdating();
+}
+
+void PlaySPScene::handleDeltaTime()
+{
     _now = SDL_GetTicks();
     if(_now > _last)
     {
         _deltaTime = ((float)(_now - _last) / 1000.0f);
         _last = _now;
     }
+}
 
+bool PlaySPScene::handleInput()
+{
     if(SDL_Components::getEvent()->type == SDL_KEYDOWN)
     {
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_a)
@@ -67,7 +96,7 @@ void PlaySPScene::update()
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_ESCAPE)
         {
             Game::popScene();
-            return;
+            return false;
         }
     }
     else if(SDL_Components::getEvent()->type == SDL_KEYUP)
@@ -81,28 +110,46 @@ void PlaySPScene::update()
             _isPlayerShooting = false;
     }
 
+    return true;
+}
+
+bool PlaySPScene::handleDeadPlayer()
+{
     if(!_player)
     {
         GameUtilities::renderText(_youLoseLabel->getTexture(), _youLoseLabel->getRect(), _youLoseLabel->getOffset());
-        return;
+        return false;
     }
     else if(!_player->isAlive())
     {
-        delete _player;
-        _player = NULL;
-        delete _enemyHorde;
-        _enemyHorde = NULL;
-        for(int i=0; i<4; i++)
-        {
-            if(!_barricads[i])
-                continue;
-
-            delete _barricads[i];
-            _barricads[i] = NULL;
-        }
-        return;
+        clearPlayScene();
+        return false;
     }
 
+    return true;
+}
+
+void PlaySPScene::clearPlayScene()
+{
+    delete _player;
+    _player = NULL;
+    delete _enemyHorde;
+    _enemyHorde = NULL;
+    delete _specialEnemy;
+    _specialEnemy = NULL;
+
+    for(int i=0; i<4; i++)
+    {
+        if(!_barricads[i])
+            continue;
+
+        delete _barricads[i];
+        _barricads[i] = NULL;
+    }
+}
+
+void PlaySPScene::handleBarricades()
+{
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
     {
         if(!_barricads[i])
@@ -131,9 +178,41 @@ void PlaySPScene::update()
                 currentBullet->destroy();
                 damageBarricade();
             }
+            else if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
+            {
+                _specialEnemy->kill();
+            }
         }
     }
+}
 
+void PlaySPScene::handleUpdating()
+{
+    _player->drawAndUpdate(_deltaTime);
+
+    for(int i=0; i<globals::BARRICADES_SIZE; i++)
+        if(_barricads[i])
+            _barricads[i]->draw();
+
+    _enemyHorde->update(_deltaTime);
+
+    if(!_labelUpToDate)
+    {
+        _labelUpToDate = true;
+        _scoreNumLabel->setText(to_string(_score).c_str());
+    }
+
+    GameUtilities::renderText(_scoreTextLabel->getTexture(), _scoreTextLabel->getRect(), _scoreTextLabel->getOffset());
+    GameUtilities::renderText(_scoreNumLabel->getTexture(), _scoreNumLabel->getRect(), _scoreNumLabel->getOffset());
+}
+
+void PlaySPScene::handleSpecialEnemy()
+{
+    _specialEnemy->update(_deltaTime);
+}
+
+void PlaySPScene::handlePlayer()
+{
     if(_enemyHorde->isCollidingWithPlayer(_player->getPosition()) || _enemyHorde->isABulletColliding({_player->getPosition().x, _player->getPosition().y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
         _player->kill();
 
@@ -144,12 +223,4 @@ void PlaySPScene::update()
 
     if(_isPlayerShooting)
         _player->shoot();
-
-    _player->drawAndUpdate(_deltaTime);
-
-    _enemyHorde->update(_deltaTime);
-
-    for(int i=0; i<globals::BARRICADES_SIZE; i++)
-        if(_barricads[i])
-            _barricads[i]->draw();
 }

@@ -1,4 +1,6 @@
 #include "button.hpp"
+#include "game.hpp"
+#include "main_menu_scene.hpp"
 
 Button::Button(Label* label, GameUtilities* gameUtils, std::function<void()> func):
     _label(label), _gameUtils(gameUtils), _func(func)

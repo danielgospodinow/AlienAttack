@@ -12,6 +12,7 @@ public:
 
     SDL_Texture* getTexture() {return _texture;}
     const char* getText () {return _text;}
+    void setText(const char* text);
     int getTextLenght() {return _textLenght;}
     Vec2 getPos() {return _pos;}
     Colors getColor() {return _color;}

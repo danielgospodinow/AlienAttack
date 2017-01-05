@@ -29,7 +29,8 @@ void Game::startGame()
         if(_scenesStack.size() != 0)
         {
             Scene* currScene = _scenesStack.top();
-            currScene->update();
+            if(currScene)
+                currScene->update();
         }
 
         SDL_RenderPresent(_sdlComponents->getRenderer());
