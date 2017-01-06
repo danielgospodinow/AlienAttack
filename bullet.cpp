@@ -5,6 +5,8 @@ Bullet::Bullet(Sprite *sprite, Vec2 pos, bool travelUp):
 {
     _sprite->setPosition(_pos);
     _isDestroyed = false;
+    _moveTime = 0.005f;
+    _moveTimer = 0;
 }
 
 Bullet::~Bullet()
@@ -20,6 +22,12 @@ void Bullet::setPosition(Vec2 pos)
 
 void Bullet::update(float deltaTime)
 {
+    _sprite->draw();
+    _moveTimer += 1 * deltaTime;
+
+    if(_moveTimer <= _moveTime)
+        return;
+
     if(_travelUp)
     {
         if(_pos.y < 0 -_sprite->getPosnsizeRect().h)
@@ -28,7 +36,7 @@ void Bullet::update(float deltaTime)
             return;
         }
 
-        setPosition(_pos + Vec2(0, -globals::PLAYER_SPEED_PPS * deltaTime * 10));
+        setPosition(_pos + Vec2(0, -1));
     }
     else
     {
@@ -38,8 +46,8 @@ void Bullet::update(float deltaTime)
             return;
         }
 
-        setPosition(_pos + Vec2(0, globals::PLAYER_SPEED_PPS * deltaTime * 10));
+        setPosition(_pos + Vec2(0, 1));
     }
 
-    _sprite->draw();
+    _moveTimer = 0;
 }

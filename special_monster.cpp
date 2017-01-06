@@ -7,6 +7,8 @@ SpecialMonster::SpecialMonster(bool leftSpawn):
     _timer = 0;
     _time = GameUtilities::getRandomNumber(3, 7);
     _isSpawned = false;
+    _moveTime = 0.005f;
+    _moveTimer = 0;
 }
 
 void SpecialMonster::update(float deltaTime)
@@ -42,13 +44,17 @@ void SpecialMonster::update(float deltaTime)
         return;
     }
 
-    if(_leftSpawn)
+    _moveTimer += 1 * deltaTime;
+
+    if(_leftSpawn && _moveTimer > _moveTime)
     {
+        _moveTimer = 0;
         _pos = _pos + Vec2(1, 0);
         _specialEnemy->setPosition(_pos);
     }
-    else
+    else if (!_leftSpawn && _moveTimer > _moveTime)
     {
+        _moveTimer = 0;
         _pos = _pos + Vec2(-1, 0);
         _specialEnemy->setPosition(_pos);
     }

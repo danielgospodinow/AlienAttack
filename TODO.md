@@ -1,3 +1,5 @@
+Features: 
+
 - [x] make an abstraction of SDL and the basic skeleton of the game
 - [x] build basic tools and utilities
 - [x] set a window icon
@@ -9,11 +11,14 @@
 - [x] make a play scene with the player ship
 - [x] build the controls
 - [x] implement shooting
-- [ ] fix the bug with the scene swapping option
 - [x] add enemies
 - [x] make enemy horde
 - [x] add enemy movement and attacking
-- [ ] add score board and health bar
+- [x] add score board and health bar
 - [ ] add two players option
 - [ ] add two players option with an AI option for one of the players
-- [ ] fix the speed of the game
+
+Bugs: 
+- [ ] fix the bug with the scene swapping option
+- [x] fix the speed of the game
+- [ ] fix the random crash throughout the play scene

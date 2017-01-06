@@ -23,6 +23,8 @@ private:
     bool _isSpawned;
     bool _leftSpawn;
     bool _isDead;
+    float _moveTimer;
+    float _moveTime;
 };
 
 #endif

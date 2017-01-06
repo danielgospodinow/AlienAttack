@@ -16,7 +16,7 @@ public:
     void setPosition (Vec2 pos) {_pos = pos; _sizeRect.x = pos.x; _sizeRect.y = pos.y;}
     Vec2 getPosition() {return _pos;}
     SDL_Rect getSize() {return _sizeRect;}
-    void die() {_isHit = true;}
+    void die() {_isHit = true; }
     bool isDead() {return _isHit;}
     EnemyTypes getType() {return _enemyType;}
 

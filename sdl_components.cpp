@@ -8,6 +8,7 @@ SDL_Components::SDL_Components()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     TTF_Init();
+    Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 
     _window = SDL_CreateWindow("Alien Attack", 100, 100, globals::GAME_WIDTH, globals::GAME_HEIGHT, SDL_WINDOW_SHOWN);
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
@@ -27,6 +28,9 @@ SDL_Components::SDL_Components()
 
 SDL_Components::~SDL_Components()
 {
+    Mix_CloseAudio();
+    TTF_Quit();
+    SDL_Quit();
     SDL_DestroyWindow(_window);
     SDL_DestroyRenderer(_renderer);
     delete _event;

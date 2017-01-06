@@ -12,7 +12,7 @@ public:
     static SDL_Window* const getWindow() {return _window;}
     static SDL_Renderer* const getRenderer() {return _renderer;}
     static SDL_Event* const getEvent() {return _event;}
-    static void killApp() { TTF_Quit(); SDL_Quit(); exit(0); }
+    static void killApp() { exit(0); }
 
 private:
     static SDL_Window* _window;

@@ -8,6 +8,9 @@ Player::Player(Sprite* sprite, Vec2 pos):
     _shootDelay = 0.7f;
     _shootDelayTimer = 0;
     _isAlive = true;
+    _shootSound = Mix_LoadWAV("sounds/playerShoot.wav");
+    _moveTime = 0.001f;
+    _moveTimer = 0;
 }
 
 Player::~Player()
@@ -20,11 +23,17 @@ Player::~Player()
         if(currentBullet)
             delete currentBullet;
     }
+
+    Mix_FreeChunk(_shootSound);
 }
 
-void Player::moveLeft(float deltaTime)
+void Player::moveLeft()
 {
-    setPosition(_pos + Vec2(-globals::PLAYER_SPEED_PPS * deltaTime * 10, 0));
+    if(_moveTimer <= _moveTime)
+        return;
+
+    setPosition(_pos + Vec2(-1, 0));
+    _moveTimer = 0;
 
     if(_pos.x <= 0)
     {
@@ -33,9 +42,13 @@ void Player::moveLeft(float deltaTime)
     }
 }
 
-void Player::moveRight(float deltaTime)
+void Player::moveRight()
 {
-    setPosition(_pos + Vec2(globals::PLAYER_SPEED_PPS * deltaTime * 10, 0));
+    if(_moveTimer <= _moveTime)
+        return;
+
+    setPosition(_pos + Vec2(1, 0));
+    _moveTimer = 0;
 
     if(_pos.x + _sprite->getPosnsizeRect().w >= globals::GAME_WIDTH)
     {
@@ -46,6 +59,7 @@ void Player::moveRight(float deltaTime)
 
 void Player::drawAndUpdate(float deltaTime)
 {
+    _moveTimer += 1 * deltaTime;
     _shootDelayTimer += 1 * deltaTime;
 
     for (Uint32 i=0; i < _bullets.size(); i++)
@@ -70,6 +84,7 @@ void Player::shoot()
     if(_shootDelayTimer <= _shootDelay)
         return;
 
+    Mix_PlayChannel(-1, _shootSound, 0);
     _shootDelayTimer = 0;
     _bullets.push_back(new Bullet(new Sprite("sprites/bullet.png", {0,0,4,25}), Vec2(_pos.x + _sprite->getPosnsizeRect().w / 2 - 1, _pos.y - 25)));
 }

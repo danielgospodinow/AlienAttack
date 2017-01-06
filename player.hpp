@@ -16,8 +16,8 @@ public:
 
     void setPosition(Vec2 pos) {_pos = pos; _sprite->setPosition(pos);}
 
-    void moveRight(float deltaTime);
-    void moveLeft(float deltaTime);
+    void moveRight();
+    void moveLeft();
 
     void shoot();
 
@@ -35,6 +35,9 @@ private:
     float _shootDelay;
     float _shootDelayTimer;
     bool _isAlive;
+    Mix_Chunk* _shootSound;
+    float _moveTimer;
+    float _moveTime;
 };
 
 #endif

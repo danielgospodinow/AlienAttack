@@ -17,6 +17,9 @@ EnemyHorde::EnemyHorde(Vec2 startPos):
     _shootTime = 4;
 
     initHorde();
+
+    _shootSound = Mix_LoadWAV("sounds/enemyShoot.wav");
+    _deadEnemySound = Mix_LoadWAV("sounds/deadEnemy.wav");
 }
 
 EnemyHorde::~EnemyHorde()
@@ -37,6 +40,9 @@ EnemyHorde::~EnemyHorde()
         if(bul)
             delete bul;
     }
+
+    Mix_FreeChunk(_shootSound);
+    Mix_FreeChunk(_deadEnemySound);
 }
 
 void EnemyHorde::update(float deltaTime)
@@ -131,6 +137,7 @@ void EnemyHorde::checkHordeCollision()
                     case Genio: break;
                     }
 
+                    Mix_PlayChannel(-1, _deadEnemySound, 0);
                     _enemyHorde[i][j]->die();
                     playerBullet->destroy();
                 }
@@ -237,6 +244,7 @@ void EnemyHorde::hordeShoot()
         if(avaivableShooters.size() == 0)
             continue;
 
+        Mix_PlayChannel(-1, _shootSound, 0);
         int shooterIndex = avaivableShooters.at(GameUtilities::getRandomNumber(0, avaivableShooters.size() - 1));
         _hordeBullets.push_back(new Bullet(new Sprite("sprites/enemyBullet.png", {0, 0, 4, 25}), _enemyHorde[i][shooterIndex]->getPosition() + Vec2(_enemyHorde[i][shooterIndex]->getSize().w/2, _enemyHorde[i][shooterIndex]->getSize().h), false));
     }

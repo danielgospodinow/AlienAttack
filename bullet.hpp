@@ -20,6 +20,8 @@ private:
     Vec2 _pos;
     bool _isDestroyed;
     bool _travelUp;
+    float _moveTime;
+    float _moveTimer;
 };
 
 #endif

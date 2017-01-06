@@ -15,6 +15,9 @@ MainMenuScene::MainMenuScene(GameUtilities *gameUtils): Scene(gameUtils)
 
     _creditialsButton = new Button(new Label("About", Vec2(globals::SCREEN_CENTER), Colors::White, 5), _gameUtils, []() { cout << "You clicked Credits" << endl; });
     _creditialsButton->getLabel()->setOffset(Vec2(0, (_creditialsButton->getLabel()->getRect().h * 2)));
+
+    _introMusic = Mix_LoadMUS("sounds/introMusic.mp3");
+    Mix_PlayMusic(_introMusic, -1);
 }
 
 MainMenuScene::~MainMenuScene()
@@ -24,6 +27,7 @@ MainMenuScene::~MainMenuScene()
     delete _playSPButton;
     delete _playMPButton;
     delete _creditialsButton;
+    Mix_FreeMusic(_introMusic);
 }
 
 void MainMenuScene::update()

@@ -7,6 +7,7 @@
 #include "game.hpp"
 #include "enemy_horde.hpp"
 #include "special_monster.hpp"
+#include "health_bar.h"
 
 class PlaySPScene : public Scene
 {
@@ -47,6 +48,10 @@ private:
     Label* _scoreTextLabel;
     Label* _scoreNumLabel;
     static bool _labelUpToDate;
+
+    Mix_Music* _introMusic;
+
+    HealthBar* _healthBar;
 };
 
 #endif

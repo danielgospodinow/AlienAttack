@@ -39,6 +39,9 @@ private:
 
     float _shootTimer;
     float _shootTime;
+
+    Mix_Chunk* _shootSound;
+    Mix_Chunk* _deadEnemySound;
 };
 
 #endif

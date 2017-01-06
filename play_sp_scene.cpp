@@ -31,6 +31,11 @@ PlaySPScene::PlaySPScene(GameUtilities* gameUtils) : Scene(gameUtils)
     _scoreTextLabel = new Label("Score: ", Vec2(0, 0), Colors::White, 3);
     _scoreTextLabel->setOffset(Vec2(_scoreTextLabel->getRect().w / 1.9f, _scoreTextLabel->getRect().h * 0.8f));
     _scoreNumLabel = new Label("0", Vec2(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::White, 3);
+
+    _introMusic = Mix_LoadMUS("sounds/whatIsLove.mp3");
+    Mix_PlayMusic(_introMusic, -1);
+
+    _healthBar = new HealthBar(3);
 }
 
 PlaySPScene::~PlaySPScene()
@@ -52,6 +57,9 @@ PlaySPScene::~PlaySPScene()
 
         delete _barricads[i];
     }
+
+    Mix_FreeMusic(_introMusic);
+    delete _healthBar;
 }
 
 void PlaySPScene::update()
@@ -188,6 +196,7 @@ void PlaySPScene::handleBarricades()
 
 void PlaySPScene::handleUpdating()
 {
+    _healthBar->update();
     _player->drawAndUpdate(_deltaTime);
 
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
@@ -214,12 +223,19 @@ void PlaySPScene::handleSpecialEnemy()
 void PlaySPScene::handlePlayer()
 {
     if(_enemyHorde->isCollidingWithPlayer(_player->getPosition()) || _enemyHorde->isABulletColliding({_player->getPosition().x, _player->getPosition().y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
-        _player->kill();
+    {
+        _healthBar->reduce();
+        if(_healthBar->getLives() <= -1)
+        {
+            _player->kill();
+            return;
+        }
+    }
 
     if(_isPlayerMovingLeft)
-        _player->moveLeft(_deltaTime);
+        _player->moveLeft();
     else if(_isPlayerMovingRight)
-        _player->moveRight(_deltaTime);
+        _player->moveRight();
 
     if(_isPlayerShooting)
         _player->shoot();
