@@ -6,12 +6,19 @@ C++ and SDL
 <p align="center">
   <img src = "http://i.imgur.com/jONgFuv.png"/>
 </p>
+
 <p align="center">
   <img src = "http://i.imgur.com/IxwZSGN.png"/>
 </p>
+
 <p align="center">
   <img src = "http://i.imgur.com/IpjjElX.png"/>
 </p>
+
 <p align="center">
   <img src = "http://i.imgur.com/hUfrLly.png"/>
+</p>
+
+<p align="center">
+  <img src = "http://i.imgur.com/51uuzHW.png"/>
 </p>
