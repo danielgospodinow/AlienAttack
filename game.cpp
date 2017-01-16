@@ -8,7 +8,7 @@ Game::Game()
     _isGameOver = false;
     _sdlComponents = new SDL_Components();
     _gameUtils = new GameUtilities(_sdlComponents);
-
+    
     pushScene(new MainMenuScene(_gameUtils));
 }
 

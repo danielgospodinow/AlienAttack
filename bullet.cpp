@@ -22,32 +22,33 @@ void Bullet::setPosition(Vec2 pos)
 
 void Bullet::update(float deltaTime)
 {
-    _sprite->draw();
     _moveTimer += 1 * deltaTime;
 
-    if(_moveTimer <= _moveTime)
-        return;
-
-    if(_travelUp)
+    if(_moveTimer > _moveTime)
     {
-        if(_pos.y < 0 -_sprite->getPosnsizeRect().h)
+        if(_travelUp)
         {
-            _isDestroyed = true;
-            return;
+            if(_pos.y < 0 -_sprite->getPosnsizeRect().h)
+            {
+                _isDestroyed = true;
+                return;
+            }
+
+            setPosition(_pos + Vec2(0, -1));
+        }
+        else
+        {
+            if(_pos.y > globals::GAME_HEIGHT)
+            {
+                _isDestroyed = true;
+                return;
+            }
+
+            setPosition(_pos + Vec2(0, 1));
         }
 
-        setPosition(_pos + Vec2(0, -1));
-    }
-    else
-    {
-        if(_pos.y > globals::GAME_HEIGHT)
-        {
-            _isDestroyed = true;
-            return;
-        }
-
-        setPosition(_pos + Vec2(0, 1));
+        _moveTimer = 0;
     }
 
-    _moveTimer = 0;
+    _sprite->draw();
 }

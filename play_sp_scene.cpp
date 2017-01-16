@@ -160,19 +160,21 @@ void PlaySPScene::handleBarricades()
 {
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
     {
+        if(!_enemyHorde)
+            return;
         if(!_barricads[i])
             continue;
 
         auto damageBarricade = [&]()
         {
-            if(_barricads[i]->getAlpha() <= 0)
+            if(_barricads[i]->getAlpha() <= 40)
             {
                 delete _barricads[i];
                 _barricads[i] = NULL;
+                return;
             }
 
-            if(_barricads[i])
-                _barricads[i]->setAlpha(_barricads[i]->getAlpha() - 10);
+            _barricads[i]->setAlpha(_barricads[i]->getAlpha() - 10);
         };
 
         if(_enemyHorde->isABulletColliding(_barricads[i]->getPosnsizeRect()))
@@ -180,6 +182,9 @@ void PlaySPScene::handleBarricades()
 
         for(Uint32 j=0; j<Player::getBullets().size(); j++)
         {
+            if(!_barricads[i])
+                break;
+
             Bullet* currentBullet = Player::getBullets().at(j);
             if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _barricads[i]->getPosnsizeRect()))
             {
@@ -188,6 +193,8 @@ void PlaySPScene::handleBarricades()
             }
             else if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
             {
+                setScore(getScore() + 50);
+                currentBullet->destroy();
                 _specialEnemy->kill();
             }
         }
