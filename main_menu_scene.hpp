@@ -8,7 +8,7 @@
 class MainMenuScene : public Scene
 {
 public:
-    MainMenuScene(GameUtilities* gameUtils);
+    MainMenuScene();
     virtual ~MainMenuScene() override;
     virtual void update() override;
 

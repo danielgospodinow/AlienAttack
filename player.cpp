@@ -23,6 +23,7 @@ Player::~Player()
         if(currentBullet)
             delete currentBullet;
     }
+    _bullets.clear();
 
     Mix_FreeChunk(_shootSound);
 }

@@ -8,11 +8,9 @@
 class Scene
 {
 public:
-    Scene(GameUtilities* gameUtils) {_gameUtils = gameUtils;}
-    virtual ~Scene() {delete _gameUtils;}
+    Scene() {}
+    virtual ~Scene() {}
     virtual void update() = 0;
-protected:
-    GameUtilities* _gameUtils;
 };
 
 #endif

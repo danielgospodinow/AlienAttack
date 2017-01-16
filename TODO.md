@@ -19,6 +19,6 @@ Features:
 - [ ] add two players option with an AI option for one of the players
 
 Bugs: 
-- [ ] fix the bug with the scene swapping option
+- [x] fix the bug with the scene swapping option
 - [x] fix the speed of the game
-- [ ] fix the random crash throughout the play scene
+- [x] fix the random crash throughout the play scene

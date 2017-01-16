@@ -2,8 +2,8 @@
 #include "game.hpp"
 #include "main_menu_scene.hpp"
 
-Button::Button(Label* label, GameUtilities* gameUtils, std::function<void()> func):
-    _label(label), _gameUtils(gameUtils), _func(func)
+Button::Button(Label* label, std::function<void()> func):
+    _label(label), _func(func)
 {
     _clickedOnce = false;
 }
@@ -34,5 +34,5 @@ void Button::update()
         _clickedOnce = false;
     }
 
-    _gameUtils->renderText(_label->getTexture(), _label->getRect(), _label->getOffset());
+    GameUtilities::renderText(_label->getTexture(), _label->getRect(), _label->getOffset());
 }

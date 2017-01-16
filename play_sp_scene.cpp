@@ -3,7 +3,7 @@
 int PlaySPScene::_score = 0;
 bool PlaySPScene::_labelUpToDate = true;
 
-PlaySPScene::PlaySPScene(GameUtilities* gameUtils) : Scene(gameUtils)
+PlaySPScene::PlaySPScene() : Scene()
 {
     Sprite* playerSprite = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64});
     Vec2 playerPos = Vec2(globals::GAME_WIDTH / 2 - playerSprite->getPosnsizeRect().w / 2, globals::GAME_HEIGHT - playerSprite->getPosnsizeRect().h * 1.3f);
@@ -103,6 +103,7 @@ bool PlaySPScene::handleInput()
 
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_ESCAPE)
         {
+            clearPlayScene();
             Game::popScene();
             return false;
         }
@@ -177,7 +178,7 @@ void PlaySPScene::handleBarricades()
             _barricads[i]->setAlpha(_barricads[i]->getAlpha() - 10);
         };
 
-        if(_enemyHorde->isABulletColliding(_barricads[i]->getPosnsizeRect()))
+        if(_barricads[i] && _enemyHorde->isABulletColliding(_barricads[i]->getPosnsizeRect()))
             damageBarricade();
 
         for(Uint32 j=0; j<Player::getBullets().size(); j++)

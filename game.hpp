@@ -18,9 +18,10 @@ public:
 
 private:
     SDL_Components* _sdlComponents;
-    GameUtilities* _gameUtils;
     bool _isGameOver;
     static stack<Scene*> _scenesStack;
+
+    GameUtilities* _gameUtils;
 };
 
 #endif

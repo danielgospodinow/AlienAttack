@@ -6,14 +6,13 @@
 class Button
 {
 public:
-    Button(Label* label, GameUtilities *gameUtils, std::function<void()> func);
+    Button(Label* label, std::function<void()> func);
     ~Button() {delete _label;}
     void update();
     Label* getLabel() {return _label;}
 
 private:
     Label* _label;
-    GameUtilities* _gameUtils;
     std::function<void()> _func;
 
     bool _clickedOnce;

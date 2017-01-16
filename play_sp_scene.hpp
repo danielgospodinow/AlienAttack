@@ -12,7 +12,7 @@
 class PlaySPScene : public Scene
 {
 public:
-    PlaySPScene(GameUtilities* gameUtils);
+    PlaySPScene();
     virtual ~PlaySPScene() override;
     virtual void update() override;
 
