@@ -127,7 +127,7 @@ void EnemyHorde::checkHordeCollision()
             {
                 Bullet* playerBullet = playerBullets.at(k);
 
-                if(_enemyHorde[i][j] && GameUtilities::areColliding(_enemyHorde[i][j]->getSize(), playerBullet->getSprite()->getPosnsizeRect()))
+                if(GameUtilities::areColliding(_enemyHorde[i][j]->getSize(), playerBullet->getSprite()->getPosnsizeRect()))
                 {
                     switch (_enemyHorde[i][j]->getType())
                     {
