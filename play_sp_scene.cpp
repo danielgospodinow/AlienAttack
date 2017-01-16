@@ -224,6 +224,17 @@ void PlaySPScene::handleUpdating()
 
 void PlaySPScene::handleSpecialEnemy()
 {
+    for(Uint32 j=0; j<Player::getBullets().size(); j++)
+    {
+        Bullet* currentBullet = Player::getBullets().at(j);
+        if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
+        {
+            setScore(getScore() + 50);
+            currentBullet->destroy();
+            _specialEnemy->kill();
+        }
+    }
+
     _specialEnemy->update(_deltaTime);
 }
 
