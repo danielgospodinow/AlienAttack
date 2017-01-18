@@ -8,38 +8,38 @@ alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o b
 			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o -o AlienAttack $(LINKER_FLAGS)
 
 
-main.o: main.cpp
-			$(CC) $(CFLAGS) main.cpp
-game.o:	game.cpp
-			$(CC) $(CFLAGS) game.cpp
-sdl_components.o: sdl_components.cpp
-			$(CC) $(CFLAGS) sdl_components.cpp
-game_utilities.o: game_utilities.cpp
-			$(CC) $(CFLAGS) game_utilities.cpp
-main_menu_scene.o: main_menu_scene.cpp
-			$(CC) $(CFLAGS) main_menu_scene.cpp
-button.o:	button.cpp
-			$(CC) $(CFLAGS) button.cpp
-label.o:	label.cpp
-			$(CC) $(CFLAGS) label.cpp
-play_sp_scene.o:	play_sp_scene.cpp
-			$(CC) $(CFLAGS) play_sp_scene.cpp
-play_mp_scene.o:	play_mp_scene.cpp
-			$(CC) $(CFLAGS) play_mp_scene.cpp
-sprite.o:	sprite.cpp
-			$(CC) $(CFLAGS) sprite.cpp
-player.o:	player.cpp
-			$(CC) $(CFLAGS) player.cpp
-bullet.o:	bullet.cpp
-			$(CC) $(CFLAGS) bullet.cpp
-enemy.o:	enemy.cpp
-			$(CC) $(CFLAGS) enemy.cpp
-enemy_horde.o:	enemy_horde.cpp
-			$(CC) $(CFLAGS) enemy_horde.cpp
-special_monster.o:	special_monster.cpp
-			$(CC) $(CFLAGS) special_monster.cpp
-health_bar.o:	health_bar.cpp
-			$(CC) $(CFLAGS) health_bar.cpp
+main.o: src/main.cpp
+			$(CC) $(CFLAGS) src/main.cpp
+game.o:	src/game.cpp
+			$(CC) $(CFLAGS) src/game.cpp
+sdl_components.o: src/sdl_components.cpp
+			$(CC) $(CFLAGS) src/sdl_components.cpp
+game_utilities.o: src/game_utilities.cpp
+			$(CC) $(CFLAGS) src/game_utilities.cpp
+main_menu_scene.o: src/main_menu_scene.cpp
+			$(CC) $(CFLAGS) src/main_menu_scene.cpp
+button.o:	src/button.cpp
+			$(CC) $(CFLAGS) src/button.cpp
+label.o:	src/label.cpp
+			$(CC) $(CFLAGS) src/label.cpp
+play_sp_scene.o:	src/play_sp_scene.cpp
+			$(CC) $(CFLAGS) src/play_sp_scene.cpp
+play_mp_scene.o:	src/play_mp_scene.cpp
+			$(CC) $(CFLAGS) src/play_mp_scene.cpp
+sprite.o:	src/sprite.cpp
+			$(CC) $(CFLAGS) src/sprite.cpp
+player.o:	src/player.cpp
+			$(CC) $(CFLAGS) src/player.cpp
+bullet.o:	src/bullet.cpp
+			$(CC) $(CFLAGS) src/bullet.cpp
+enemy.o:	src/enemy.cpp
+			$(CC) $(CFLAGS) src/enemy.cpp
+enemy_horde.o:	src/enemy_horde.cpp
+			$(CC) $(CFLAGS) src/enemy_horde.cpp
+special_monster.o:	src/special_monster.cpp
+			$(CC) $(CFLAGS) src/special_monster.cpp
+health_bar.o:	src/health_bar.cpp
+			$(CC) $(CFLAGS) src/health_bar.cpp
 
 
 clean:
