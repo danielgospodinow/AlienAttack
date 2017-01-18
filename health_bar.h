@@ -7,7 +7,7 @@
 class HealthBar
 {
 public:
-    HealthBar(int lives);
+    HealthBar(int lives, bool playerTwo = false);
     ~HealthBar();
     void update();
     void reduce();

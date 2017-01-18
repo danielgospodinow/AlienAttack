@@ -11,7 +11,7 @@ MainMenuScene::MainMenuScene() : Scene()
     _playSPButton = new Button(new Label("Single-player", Vec2(globals::SCREEN_CENTER), Colors::White, 5), [&]() { Game::pushScene(new PlaySPScene()); });
     _playSPButton->getLabel()->setOffset(Vec2(0, (_playSPButton->getLabel()->getRect().h * -2)));
 
-    _playMPButton = new Button(new Label("Multiplayer", Vec2(globals::SCREEN_CENTER), Colors::White, 5), []() { cout << "You clicked Multiplayer" << endl; });
+    _playMPButton = new Button(new Label("Multiplayer", Vec2(globals::SCREEN_CENTER), Colors::White, 5), []() { Game::pushScene(new PlayMPScene()); });
 
     _creditialsButton = new Button(new Label("About", Vec2(globals::SCREEN_CENTER), Colors::White, 5), []() { cout << "You clicked Credits" << endl; });
     _creditialsButton->getLabel()->setOffset(Vec2(0, (_creditialsButton->getLabel()->getRect().h * 2)));

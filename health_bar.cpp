@@ -1,10 +1,13 @@
 #include "health_bar.h"
 
-HealthBar::HealthBar(int lives):
+HealthBar::HealthBar(int lives,  bool playerTwo):
     _lives(lives)
 {
     _healthBar = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X/2, globals::PLAYER_SPRITE_SIZE_Y/2}, {0,685,104,64});
-    _pos = Vec2(globals::GAME_WIDTH - globals::PLAYER_SPRITE_SIZE_X/2 * 1.2f, _healthBar->getPosnsizeRect().h * 0.8f);
+    if(!playerTwo)
+        _pos = Vec2(globals::GAME_WIDTH - globals::PLAYER_SPRITE_SIZE_X/2 * 1.2f, _healthBar->getPosnsizeRect().h * 0.8f);
+    else
+        _pos = Vec2(globals::GAME_WIDTH - globals::PLAYER_SPRITE_SIZE_X/2 * 1.2f, _healthBar->getPosnsizeRect().h * 0.8f + _healthBar->getPosnsizeRect().h * 1.3f);
     _healthBar->setPosition(_pos);
 }
 

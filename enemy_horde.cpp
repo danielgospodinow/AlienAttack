@@ -1,5 +1,6 @@
 #include "enemy_horde.hpp"
 #include "play_sp_scene.hpp"
+#include "play_mp_scene.hpp"
 
 EnemyHorde::EnemyHorde(Vec2 startPos):
     _pos(startPos)
@@ -131,9 +132,9 @@ void EnemyHorde::checkHordeCollision()
                 {
                     switch (_enemyHorde[i][j]->getType())
                     {
-                    case Radkata: PlaySPScene::setScore(PlaySPScene::getScore() + 30); break;
-                    case Sashkata:PlaySPScene::setScore(PlaySPScene::getScore() + 20); break;
-                    case Kirkata:PlaySPScene::setScore(PlaySPScene::getScore() + 10); break;
+                    case Radkata: PlaySPScene::setScore(PlaySPScene::getScore() + 30); PlayMPScene::setScore(PlaySPScene::getScore() + 30); break;
+                    case Sashkata:PlaySPScene::setScore(PlaySPScene::getScore() + 20); PlayMPScene::setScore(PlaySPScene::getScore() + 20); break;
+                    case Kirkata:PlaySPScene::setScore(PlaySPScene::getScore() + 10); PlayMPScene::setScore(PlaySPScene::getScore() + 10); break;
                     case Genio: break;
                     }
 

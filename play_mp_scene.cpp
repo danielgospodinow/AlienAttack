@@ -1,19 +1,28 @@
-#include "play_sp_scene.hpp"
+#include "play_mp_scene.hpp"
 
-int PlaySPScene::_score = 0;
-bool PlaySPScene::_labelUpToDate = true;
+int PlayMPScene::_score = 0;
+bool PlayMPScene::_labelUpToDate = true;
 
-PlaySPScene::PlaySPScene() : Scene()
+PlayMPScene::PlayMPScene() : Scene()
 {
     Sprite* playerSprite = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64});
     Vec2 playerPos = Vec2(globals::GAME_WIDTH / 2 - playerSprite->getPosnsizeRect().w / 2, globals::GAME_HEIGHT - playerSprite->getPosnsizeRect().h * 1.3f);
     playerSprite->setPosition(playerPos);
 
     _player = new Player(playerSprite, playerPos);
+    _player->setPosition(_player->getSprite()->getPosition() + Vec2(-_player->getSprite()->getPosnsizeRect().w * 1.8f - 5, 0));
+
+    _playerTwo = new Player(new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64}), Vec2(0, 0));
+    _playerTwo->getSprite()->setAlpha(90);
+    _playerTwo->setPosition(playerPos + Vec2(_player->getSprite()->getPosnsizeRect().w * 1.8f, 0));
 
     _isPlayerMovingRight = false;
     _isPlayerMovingLeft = false;
     _isPlayerShooting = false;
+
+    _isPlayerTwoMovingRight = false;
+    _isPlayerTwoMovingLeft = false;
+    _isPlayerTwoShooting = false;
 
     _deltaTime = 0;
     _now = 0;
@@ -36,16 +45,19 @@ PlaySPScene::PlaySPScene() : Scene()
     Mix_PlayMusic(_introMusic, -1);
 
     _healthBar = new HealthBar(3);
+    _healthBarTwo = new HealthBar(3, true);
 
     _score = 0;
 }
 
-PlaySPScene::~PlaySPScene()
+PlayMPScene::~PlayMPScene()
 {
     if(_enemyHorde)
         delete _enemyHorde;
     if(_player)
         delete _player;
+    if(_playerTwo)
+        delete _playerTwo;
     if(_specialEnemy)
         delete _specialEnemy;
     delete _youLoseLabel;
@@ -62,9 +74,10 @@ PlaySPScene::~PlaySPScene()
 
     Mix_FreeMusic(_introMusic);
     delete _healthBar;
+    delete _healthBarTwo;
 }
 
-void PlaySPScene::update()
+void PlayMPScene::update()
 {
     handleDeltaTime();
     if(!handleInput()) return;
@@ -72,10 +85,11 @@ void PlaySPScene::update()
     handleBarricades();
     handleSpecialEnemy();
     handlePlayer();
+    handlePlayerTwo();
     handleUpdating();
 }
 
-void PlaySPScene::handleDeltaTime()
+void PlayMPScene::handleDeltaTime()
 {
     _now = SDL_GetTicks();
     if(_now > _last)
@@ -85,7 +99,7 @@ void PlaySPScene::handleDeltaTime()
     }
 }
 
-bool PlaySPScene::handleInput()
+bool PlayMPScene::handleInput()
 {
     if(SDL_Components::getEvent()->type == SDL_KEYDOWN)
     {
@@ -99,9 +113,22 @@ bool PlaySPScene::handleInput()
             _isPlayerMovingLeft = false;
             _isPlayerMovingRight = true;
         }
+        if(SDL_Components::getEvent()->key.keysym.sym == SDLK_LEFT)
+        {
+            _isPlayerTwoMovingRight = false;
+            _isPlayerTwoMovingLeft = true;
+        }
+        else if(SDL_Components::getEvent()->key.keysym.sym == SDLK_RIGHT)
+        {
+            _isPlayerTwoMovingLeft = false;
+            _isPlayerTwoMovingRight = true;
+        }
 
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_SPACE)
             _isPlayerShooting = true;
+
+        if(SDL_Components::getEvent()->key.keysym.sym == SDLK_KP_ENTER)
+            _isPlayerTwoShooting = true;
 
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_ESCAPE)
         {
@@ -119,31 +146,56 @@ bool PlaySPScene::handleInput()
 
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_SPACE)
             _isPlayerShooting = false;
+
+        if(SDL_Components::getEvent()->key.keysym.sym == SDLK_LEFT)
+            _isPlayerTwoMovingLeft = false;
+        else if(SDL_Components::getEvent()->key.keysym.sym == SDLK_RIGHT)
+            _isPlayerTwoMovingRight = false;
+
+        if(SDL_Components::getEvent()->key.keysym.sym == SDLK_KP_ENTER)
+            _isPlayerTwoShooting = false;
     }
 
     return true;
 }
 
-bool PlaySPScene::handleDeadPlayer()
+bool PlayMPScene::handleDeadPlayer()
 {
-    if(!_player)
+    if(_player && !_player->isAlive())
     {
+        _player->kill();
+        delete _player;
+        _player = NULL;
+    }
+    if(_playerTwo && !_playerTwo->isAlive())
+    {
+        _playerTwo->kill();
+        delete _playerTwo;
+        _playerTwo = NULL;
+    }
+
+    if(!_player && !_playerTwo)
+    {
+        clearPlayScene();
         GameUtilities::renderText(_youLoseLabel->getTexture(), _youLoseLabel->getRect(), _youLoseLabel->getOffset());
         return false;
     }
-    else if(!_player->isAlive())
-    {
-        clearPlayScene();
-        return false;
-    }
 
     return true;
 }
 
-void PlaySPScene::clearPlayScene()
+void PlayMPScene::clearPlayScene()
 {
-    delete _player;
-    _player = NULL;
+    if(_player)
+    {
+        delete _player;
+        _player = NULL;
+    }
+    if(_playerTwo)
+    {
+        delete _playerTwo;
+        _playerTwo = NULL;
+    }
     delete _enemyHorde;
     _enemyHorde = NULL;
     delete _specialEnemy;
@@ -159,7 +211,7 @@ void PlaySPScene::clearPlayScene()
     }
 }
 
-void PlaySPScene::handleBarricades()
+void PlayMPScene::handleBarricades()
 {
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
     {
@@ -194,20 +246,19 @@ void PlaySPScene::handleBarricades()
                 currentBullet->destroy();
                 damageBarricade();
             }
-            else if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
-            {
-                setScore(getScore() + 50);
-                currentBullet->destroy();
-                _specialEnemy->kill();
-            }
         }
     }
 }
 
-void PlaySPScene::handleUpdating()
+void PlayMPScene::handleUpdating()
 {
     _healthBar->update();
-    _player->drawAndUpdate(_deltaTime);
+    _healthBarTwo->update();
+
+    if(_player)
+        _player->drawAndUpdate(_deltaTime);
+    if(_playerTwo)
+        _playerTwo->drawAndUpdate(_deltaTime);
 
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
         if(_barricads[i])
@@ -225,7 +276,7 @@ void PlaySPScene::handleUpdating()
     GameUtilities::renderText(_scoreNumLabel->getTexture(), _scoreNumLabel->getRect(), _scoreNumLabel->getOffset());
 }
 
-void PlaySPScene::handleSpecialEnemy()
+void PlayMPScene::handleSpecialEnemy()
 {
     for(Uint32 j=0; j<Player::getBullets().size(); j++)
     {
@@ -241,8 +292,11 @@ void PlaySPScene::handleSpecialEnemy()
     _specialEnemy->update(_deltaTime);
 }
 
-void PlaySPScene::handlePlayer()
+void PlayMPScene::handlePlayer()
 {
+    if(!_player)
+        return;
+
     if(_enemyHorde->isCollidingWithPlayer(_player->getPosition()) || _enemyHorde->isABulletColliding({_player->getPosition().x, _player->getPosition().y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
     {
         _healthBar->reduce();
@@ -257,7 +311,29 @@ void PlaySPScene::handlePlayer()
         _player->moveLeft();
     else if(_isPlayerMovingRight)
         _player->moveRight();
-
     if(_isPlayerShooting)
         _player->shoot();
+}
+
+void PlayMPScene::handlePlayerTwo()
+{
+    if(!_playerTwo)
+        return;
+
+    if(_enemyHorde->isCollidingWithPlayer(_playerTwo->getPosition()) || _enemyHorde->isABulletColliding({_playerTwo->getPosition().x, _playerTwo->getPosition().y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
+    {
+        _healthBarTwo->reduce();
+        if(_healthBarTwo->getLives() <= -1)
+        {
+            _playerTwo->kill();
+            return;
+        }
+    }
+
+    if(_isPlayerTwoMovingLeft)
+        _playerTwo->moveLeft();
+    else if(_isPlayerTwoMovingRight)
+        _playerTwo->moveRight();
+    if(_isPlayerTwoShooting)
+        _playerTwo->shoot();
 }
