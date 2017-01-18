@@ -15,10 +15,11 @@ Features:
 - [x] make enemy horde
 - [x] add enemy movement and attacking
 - [x] add score board and health bar
-- [ ] add two players option
+- [x] add two players option
 - [ ] add two players option with an AI option for one of the players
 
 Bugs: 
 - [x] fix the bug with the scene swapping option
 - [x] fix the speed of the game
 - [x] fix the random crash throughout the play scene
+- [x] fix the score problem counter problem
