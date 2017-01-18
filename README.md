@@ -22,3 +22,15 @@ C++ and SDL
 <p align="center">
   <img src = "http://i.imgur.com/51uuzHW.png"/>
 </p>
+
+<p align="center">
+  <img src = "http://i.imgur.com/7ZbtBQL.png"/>
+</p>
+
+<p align="center">
+  <img src = "http://i.imgur.com/JQcldTl.png"/>
+</p>
+
+<p align="center">
+  <img src = "http://i.imgur.com/y97zsnI.png"/>
+</p>
