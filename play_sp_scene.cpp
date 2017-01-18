@@ -30,7 +30,7 @@ PlaySPScene::PlaySPScene() : Scene()
 
     _scoreTextLabel = new Label("Score: ", Vec2(0, 0), Colors::White, 3);
     _scoreTextLabel->setOffset(Vec2(_scoreTextLabel->getRect().w / 1.9f, _scoreTextLabel->getRect().h * 0.8f));
-    _scoreNumLabel = new Label("0", Vec2(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::White, 3);
+    _scoreNumLabel = new Label("0", Vec2(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::Green, 3);
 
     _introMusic = Mix_LoadMUS("sounds/whatIsLove.mp3");
     Mix_PlayMusic(_introMusic, -1);
