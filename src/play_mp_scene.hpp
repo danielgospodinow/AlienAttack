@@ -59,9 +59,9 @@ private:
     HealthBar* _healthBar;
     HealthBar* _healthBarTwo;
 
-    bool _playerTwoIsAI;
+    bool _isPlayerTwoAI;
     bool _playerTwoAIRight;
-    float _AIMoveTimer;
+    float _playerTwoAITimer;
     vector<Bullet*>* _hordeBullets;
 };
 

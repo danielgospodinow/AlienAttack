@@ -15,10 +15,10 @@ PlayMPScene::PlayMPScene() : Scene()
     _playerTwo = new Player(new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64}), Vec2(0, 0));
     _playerTwo->getSprite()->setAlpha(90);
     _playerTwo->setPosition(playerPos + Vec2(_player->getSprite()->getPosnsizeRect().w * 1.8f, 0));
-    _playerTwoIsAI = false;
+    _isPlayerTwoAI = false;
     _playerTwoAIRight= false;
     _hordeBullets = NULL;
-    _AIMoveTimer = 0;
+    _playerTwoAITimer = 0;
 
     _isPlayerMovingRight = false;
     _isPlayerMovingLeft = false;
@@ -141,7 +141,7 @@ bool PlayMPScene::handleInput()
             return false;
         }
         if(SDL_Components::getEvent()->key.keysym.sym == SDLK_l)
-            _playerTwoIsAI = !_playerTwoIsAI;
+            _isPlayerTwoAI = !_isPlayerTwoAI;
     }
     else if(SDL_Components::getEvent()->type == SDL_KEYUP)
     {
@@ -336,7 +336,7 @@ void PlayMPScene::handlePlayerTwo()
         }
     }
 
-    if(!_playerTwoIsAI)
+    if(!_isPlayerTwoAI)
     {
         if(_isPlayerTwoMovingLeft)
             _playerTwo->moveLeft();
@@ -347,10 +347,10 @@ void PlayMPScene::handlePlayerTwo()
     }
     else
     {
-        if(_hordeBullets == NULL)
+        if(!_hordeBullets)
             _hordeBullets = _enemyHorde->getHordeBullets();
 
-        _AIMoveTimer += 1 * _deltaTime;
+        _playerTwoAITimer += 1 * _deltaTime;
 
         SDL_Rect playerTwoRect = _playerTwo->getSprite()->getPosnsizeRect();
 
@@ -379,7 +379,7 @@ void PlayMPScene::handlePlayerTwo()
 
         auto moveAIPlayer = [&]()
         {
-            if(_AIMoveTimer < 0.2f)
+            if(_playerTwoAITimer < 0.2f)
                 return;
 
             if(playerTwoRect.x + playerTwoRect.w < _enemyHorde->getHordePos().x)
@@ -389,7 +389,7 @@ void PlayMPScene::handlePlayerTwo()
             else
                 _playerTwoAIRight = GameUtilities::getRandomNumber(0, 1);
 
-            _AIMoveTimer = 0;
+            _playerTwoAITimer = 0;
         };
 
         auto handleAIPlayer = [&]()
