@@ -16,7 +16,7 @@ Features:
 - [x] add enemy movement and attacking
 - [x] add score board and health bar
 - [x] add two players option
-- [ ] add two players option with an AI option for one of the players
+- [x] add two players option with an AI option for one of the players
 
 Bugs: 
 - [x] fix the bug with the scene swapping option
