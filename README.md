@@ -1,3 +1,9 @@
+<!--
+	The whole project is located in my github accout - https://github.com/danielgospodinow
+	
+	Link: https://github.com/danielgospodinow/AlienAttack
+-->
+
 # AlienAttack <img src="http://i.imgur.com/7RmahSt.png" width="20" height = "20">
 Single-player and Multiplayer arcade game similar to **Space Invaders** made with 
 C++ and SDL
