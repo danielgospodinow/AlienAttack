@@ -15,6 +15,10 @@ PlayMPScene::PlayMPScene() : Scene()
     _playerTwo = new Player(new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64}), Vec2(0, 0));
     _playerTwo->getSprite()->setAlpha(90);
     _playerTwo->setPosition(playerPos + Vec2(_player->getSprite()->getPosnsizeRect().w * 1.8f, 0));
+    _playerTwoIsAI = false;
+    _playerTwoAIRight= false;
+    _hordeBullets = NULL;
+    _AIMoveTimer = 0;
 
     _isPlayerMovingRight = false;
     _isPlayerMovingLeft = false;
@@ -136,6 +140,8 @@ bool PlayMPScene::handleInput()
             Game::popScene();
             return false;
         }
+        if(SDL_Components::getEvent()->key.keysym.sym == SDLK_l)
+            _playerTwoIsAI = !_playerTwoIsAI;
     }
     else if(SDL_Components::getEvent()->type == SDL_KEYUP)
     {
@@ -330,10 +336,74 @@ void PlayMPScene::handlePlayerTwo()
         }
     }
 
-    if(_isPlayerTwoMovingLeft)
-        _playerTwo->moveLeft();
-    else if(_isPlayerTwoMovingRight)
-        _playerTwo->moveRight();
-    if(_isPlayerTwoShooting)
-        _playerTwo->shoot();
+    if(!_playerTwoIsAI)
+    {
+        if(_isPlayerTwoMovingLeft)
+            _playerTwo->moveLeft();
+        else if(_isPlayerTwoMovingRight)
+            _playerTwo->moveRight();
+        if(_isPlayerTwoShooting)
+            _playerTwo->shoot();
+    }
+    else
+    {
+        if(_hordeBullets == NULL)
+            _hordeBullets = _enemyHorde->getHordeBullets();
+
+        _AIMoveTimer += 1 * _deltaTime;
+
+        SDL_Rect playerTwoRect = _playerTwo->getSprite()->getPosnsizeRect();
+
+        auto isUnderBarricade = [&]()
+        {
+            for(int i=0; i<globals::BARRICADES_SIZE; i++)
+            {
+                if(!_barricads[i])
+                    continue;
+
+                if(playerTwoRect.x + playerTwoRect.w * 0.7f >= _barricads[i]->getPosition().x
+                        && playerTwoRect.x + playerTwoRect.w * 0.3f <= _barricads[i]->getPosition().x + _barricads[i]->getPosnsizeRect().w)
+                    return true;
+            }
+
+            return false;
+        };
+
+        auto isUnderEnemyHorde = [&]()
+        {
+            if(playerTwoRect.x + playerTwoRect.w / 2 >= _enemyHorde->getHordePos().x
+                    && playerTwoRect.x + playerTwoRect.w / 2 <= _enemyHorde->getHordePos().x + _enemyHorde->getHordeSize().x)
+                return true;
+            return false;
+        };
+
+        auto moveAIPlayer = [&]()
+        {
+            if(_AIMoveTimer < 0.2f)
+                return;
+
+            if(playerTwoRect.x + playerTwoRect.w < _enemyHorde->getHordePos().x)
+                _playerTwoAIRight = true;
+            else if(playerTwoRect.x > _enemyHorde->getHordePos().x + _enemyHorde->getHordeSize().x)
+                _playerTwoAIRight = false;
+            else
+                _playerTwoAIRight = GameUtilities::getRandomNumber(0, 1);
+
+            _AIMoveTimer = 0;
+        };
+
+        auto handleAIPlayer = [&]()
+        {
+            if(!isUnderBarricade() && isUnderEnemyHorde())
+                _playerTwo->shoot();
+
+            if(_playerTwoAIRight)
+                _playerTwo->moveRight();
+            else
+                _playerTwo->moveLeft();
+        };
+
+        moveAIPlayer();
+        handleAIPlayer();
+    }
 }

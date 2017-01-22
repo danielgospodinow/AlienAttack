@@ -17,6 +17,7 @@ public:
     Vec2 getHordePos() {return _pos;}
     bool isCollidingWithPlayer(Vec2 playerPos);
     bool isABulletColliding(SDL_Rect posnrect);
+    vector<Bullet*>* getHordeBullets() {return &_hordeBullets;}
 
 private:
     void initHorde();
