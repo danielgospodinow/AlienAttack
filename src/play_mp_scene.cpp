@@ -207,7 +207,7 @@ void PlayMPScene::clearPlayScene()
     delete _specialEnemy;
     _specialEnemy = NULL;
 
-    for(int i=0; i<4; i++)
+    for(int i=0; i<globals::BARRICADES_SIZE; i++)
     {
         if(!_barricads[i])
             continue;
