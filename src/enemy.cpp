@@ -1,6 +1,6 @@
 #include "enemy.hpp"
 
-Enemy::Enemy(EnemyTypes enemyType, Vec2 position):
+Enemy::Enemy(EnemyTypes enemyType, Vec2<int> position):
     _pos(position), _enemyType(enemyType)
 {
     _isHit = false;

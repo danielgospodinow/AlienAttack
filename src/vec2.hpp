@@ -1,11 +1,12 @@
 #ifndef VEC2_HPP
 #define VEC2_HPP
 
+template <class T>
 struct Vec2
 {
 public:
     Vec2() {x = 0; y = 0;}
-    Vec2(int initX, int initY): x(initX), y(initY) {}
+    Vec2(T initX, T initY): x(initX), y(initY) {}
 
     int x, y;
 

@@ -10,12 +10,12 @@
 class EnemyHorde
 {
 public:
-    EnemyHorde(Vec2 startPos);
+    EnemyHorde(Vec2<int> startPos);
     ~EnemyHorde();
     void update(float deltaTime);
-    Vec2 getHordeSize() {return _hordeSize;}
-    Vec2 getHordePos() {return _pos;}
-    bool isCollidingWithPlayer(Vec2 playerPos);
+    Vec2<int> getHordeSize() {return _hordeSize;}
+    Vec2<int> getHordePos() {return _pos;}
+    bool isCollidingWithPlayer(Vec2<int> playerPos);
     bool isABulletColliding(SDL_Rect posnrect);
     vector<Bullet*>* getHordeBullets() {return &_hordeBullets;}
 
@@ -23,11 +23,11 @@ private:
     void initHorde();
     void moveHorde();
     void hordeShoot();
-    Vec2 getEnemyOffsetInHorde(EnemyTypes type);
+    Vec2<int> getEnemyOffsetInHorde(EnemyTypes type);
     void checkHordeCollision();
 
-    Vec2 _pos;
-    Vec2 _hordeSize;
+    Vec2<int> _pos;
+    Vec2<int> _hordeSize;
     Enemy* _enemyHorde [globals::ENEMY_HORDE_HEIGHT][globals::ENEMY_HORDE_WIDTH];
     vector<Bullet*> _hordeBullets;
     int _maxUnitWidth;

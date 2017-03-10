@@ -17,7 +17,7 @@ public:
 
 private:
     Enemy* _specialEnemy;
-    Vec2 _pos;
+    Vec2<int> _pos;
     float _timer;
     float _time;
     bool _isSpawned;

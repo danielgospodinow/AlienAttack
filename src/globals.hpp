@@ -29,7 +29,7 @@ namespace globals
     const int GAME_WIDTH = 800;
     const int GAME_HEIGHT = 600;
 
-    const Vec2 SCREEN_CENTER = Vec2(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+    const Vec2<int> SCREEN_CENTER = Vec2<int>(GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
     const float LABEL_HEIGHT_PROPORTION = 1 / 14.0;
 

@@ -10,7 +10,7 @@ GameUtilities::GameUtilities(SDL_Components* sdlComponents):
     _message = NULL;
 }
 
-void GameUtilities::printText(const char *text, Colors color, Vec2 textLocation, Vec2 textSize)
+void GameUtilities::printText(const char *text, Colors color, Vec2<int> textLocation, Vec2<int> textSize)
 {
     SDL_Color fontColor;
     SDL_Rect rect = {textLocation.x, textLocation.y, textSize.x, textSize.y};
@@ -55,7 +55,7 @@ SDL_Texture* GameUtilities::getText(const char *text, Colors color)
     return _message;
 }
 
-void GameUtilities::renderText(SDL_Texture* texture, SDL_Rect rect, Vec2 offset)
+void GameUtilities::renderText(SDL_Texture* texture, SDL_Rect rect, Vec2<int> offset)
 {
     rect.x += offset.x;
     rect.y += offset.y;

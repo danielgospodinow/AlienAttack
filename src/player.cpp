@@ -2,7 +2,7 @@
 
 vector<Bullet*> Player::_bullets;
 
-Player::Player(Sprite* sprite, Vec2 pos):
+Player::Player(Sprite* sprite, Vec2<int> pos):
     _sprite(sprite), _pos(pos)
 {
     _shootDelay = 0.7f;
@@ -33,12 +33,12 @@ void Player::moveLeft()
     if(_moveTimer <= _moveTime)
         return;
 
-    setPosition(_pos + Vec2(-1, 0));
+    setPosition(_pos + Vec2<int>(-1, 0));
     _moveTimer = 0;
 
     if(_pos.x <= 0)
     {
-        _pos = Vec2(0, _pos.y);
+        _pos = Vec2<int>(0, _pos.y);
         setPosition(_pos);
     }
 }
@@ -48,12 +48,12 @@ void Player::moveRight()
     if(_moveTimer <= _moveTime)
         return;
 
-    setPosition(_pos + Vec2(1, 0));
+    setPosition(_pos + Vec2<int>(1, 0));
     _moveTimer = 0;
 
     if(_pos.x + _sprite->getPosnsizeRect().w >= globals::GAME_WIDTH)
     {
-        _pos = Vec2(globals::GAME_WIDTH - _sprite->getPosnsizeRect().w, _pos.y);
+        _pos = Vec2<int>(globals::GAME_WIDTH - _sprite->getPosnsizeRect().w, _pos.y);
         setPosition(_pos);
     }
 }
@@ -87,5 +87,5 @@ void Player::shoot()
 
     Mix_PlayChannel(-1, _shootSound, 0);
     _shootDelayTimer = 0;
-    _bullets.push_back(new Bullet(new Sprite("sprites/bullet.png", {0,0,4,25}), Vec2(_pos.x + _sprite->getPosnsizeRect().w / 2 - 1, _pos.y - 25)));
+    _bullets.push_back(new Bullet(new Sprite("sprites/bullet.png", {0,0,4,25}), Vec2<int>(_pos.x + _sprite->getPosnsizeRect().w / 2 - 1, _pos.y - 25)));
 }

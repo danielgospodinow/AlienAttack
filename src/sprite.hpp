@@ -25,7 +25,7 @@ public:
 
 	void setupSprite(SDL_Texture* texture, SDL_Rect cropRect, SDL_Rect posnsizeRect);
 
-    void setPosition(Vec2 position);
+    void setPosition(Vec2<int> position);
 	void setTexture(SDL_Texture* texture);
 	void setCropRect(SDL_Rect cropRect);
 	void setPosnsizeRect(SDL_Rect posnsizeRect);
@@ -34,14 +34,14 @@ public:
 	SDL_Texture* getTexture();
 	SDL_Rect getCropRect();
 	SDL_Rect getPosnsizeRect();
-    Vec2 getPosition();
+    Vec2<int> getPosition();
     int getAlpha() {return _alpha;}
 
 private:
 	SDL_Texture* _texture;
 	SDL_Rect _cropRect;
 	SDL_Rect _posnsizeRect;
-    Vec2 _position;
+    Vec2<int> _position;
     int _alpha;
 };
 

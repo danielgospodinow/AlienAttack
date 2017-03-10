@@ -6,7 +6,7 @@ bool PlaySPScene::_labelUpToDate = true;
 PlaySPScene::PlaySPScene() : Scene()
 {
     Sprite* playerSprite = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64});
-    Vec2 playerPos = Vec2(globals::GAME_WIDTH / 2 - playerSprite->getPosnsizeRect().w / 2, globals::GAME_HEIGHT - playerSprite->getPosnsizeRect().h * 1.3f);
+    Vec2<int> playerPos = Vec2<int>(globals::GAME_WIDTH / 2 - playerSprite->getPosnsizeRect().w / 2, globals::GAME_HEIGHT - playerSprite->getPosnsizeRect().h * 1.3f);
     playerSprite->setPosition(playerPos);
 
     _player = new Player(playerSprite, playerPos);
@@ -19,7 +19,7 @@ PlaySPScene::PlaySPScene() : Scene()
     _now = 0;
     _last = 0;
 
-    _enemyHorde = new EnemyHorde(Vec2(0, 50));
+    _enemyHorde = new EnemyHorde(Vec2<int>(0, 50));
 
     _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 8);
 
@@ -28,9 +28,9 @@ PlaySPScene::PlaySPScene() : Scene()
 
     _specialEnemy = new SpecialMonster(GameUtilities::getRandomNumber(0, 1));
 
-    _scoreTextLabel = new Label("Score: ", Vec2(0, 0), Colors::White, 3);
-    _scoreTextLabel->setOffset(Vec2(_scoreTextLabel->getRect().w / 1.9f, _scoreTextLabel->getRect().h * 0.8f));
-    _scoreNumLabel = new Label("0", Vec2(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::Green, 3);
+    _scoreTextLabel = new Label("Score: ", Vec2<int>(0, 0), Colors::White, 3);
+    _scoreTextLabel->setOffset(Vec2<int>(_scoreTextLabel->getRect().w / 1.9f, _scoreTextLabel->getRect().h * 0.8f));
+    _scoreNumLabel = new Label("0", Vec2<int>(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::Green, 3);
 
     _introMusic = Mix_LoadMUS("sounds/whatIsLove.mp3");
     Mix_PlayMusic(_introMusic, -1);

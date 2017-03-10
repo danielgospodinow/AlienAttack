@@ -9,12 +9,12 @@ enum EnemyTypes {Radkata, Sashkata, Kirkata, Genio};
 class Enemy
 {
 public:
-    Enemy(EnemyTypes enemyType, Vec2 position);
+    Enemy(EnemyTypes enemyType, Vec2<int> position);
     ~Enemy();
     void update(float deltaTime);
 
-    void setPosition (Vec2 pos) {_pos = pos; _sizeRect.x = pos.x; _sizeRect.y = pos.y;}
-    Vec2 getPosition() {return _pos;}
+    void setPosition (Vec2<int> pos) {_pos = pos; _sizeRect.x = pos.x; _sizeRect.y = pos.y;}
+    Vec2<int> getPosition() {return _pos;}
     SDL_Rect getSize() {return _sizeRect;}
     void die() {_isHit = true; }
     bool isDead() {return _isHit;}
@@ -30,7 +30,7 @@ private:
     SDL_Rect _sizeRect;
 
     const char* _spriteLocation;
-    Vec2 _pos;
+    Vec2<int> _pos;
     bool _isHit;
     EnemyTypes _enemyType;
 

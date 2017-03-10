@@ -1,6 +1,6 @@
 #include "bullet.hpp"
 
-Bullet::Bullet(Sprite *sprite, Vec2 pos, bool travelUp):
+Bullet::Bullet(Sprite *sprite, Vec2<int> pos, bool travelUp):
     _sprite(sprite), _pos(pos), _travelUp(travelUp)
 {
     _sprite->setPosition(_pos);
@@ -14,7 +14,7 @@ Bullet::~Bullet()
     delete _sprite;
 }
 
-void Bullet::setPosition(Vec2 pos)
+void Bullet::setPosition(Vec2<int> pos)
 {
     _pos = pos;
     _sprite->setPosition(_pos);
@@ -34,7 +34,7 @@ void Bullet::update(float deltaTime)
                 return;
             }
 
-            setPosition(_pos + Vec2(0, -1));
+            setPosition(_pos + Vec2<int>(0, -1));
         }
         else
         {
@@ -44,7 +44,7 @@ void Bullet::update(float deltaTime)
                 return;
             }
 
-            setPosition(_pos + Vec2(0, 1));
+            setPosition(_pos + Vec2<int>(0, 1));
         }
 
         _moveTimer = 0;

@@ -3,7 +3,7 @@
 SpecialMonster::SpecialMonster(bool leftSpawn):
     _leftSpawn(leftSpawn)
 {
-    _specialEnemy = new Enemy(EnemyTypes::Genio, Vec2(0, 0));
+    _specialEnemy = new Enemy(EnemyTypes::Genio, Vec2<int>(0, 0));
     _timer = 0;
     _time = GameUtilities::getRandomNumber(3, 7);
     _isSpawned = false;
@@ -27,9 +27,9 @@ void SpecialMonster::update(float deltaTime)
             _leftSpawn = GameUtilities::getRandomNumber(0,1);
 
             if(_leftSpawn)
-                _pos = Vec2(0 - _specialEnemy->getSize().w, 10);
+                _pos = Vec2<int>(0 - _specialEnemy->getSize().w, 10);
             else
-                _pos = Vec2(globals::GAME_WIDTH, 10);
+                _pos = Vec2<int>(globals::GAME_WIDTH, 10);
 
             _isSpawned = true;
             _isDead = false;
@@ -49,13 +49,13 @@ void SpecialMonster::update(float deltaTime)
     if(_leftSpawn && _moveTimer > _moveTime)
     {
         _moveTimer = 0;
-        _pos = _pos + Vec2(1, 0);
+        _pos = _pos + Vec2<int>(1, 0);
         _specialEnemy->setPosition(_pos);
     }
     else if (!_leftSpawn && _moveTimer > _moveTime)
     {
         _moveTimer = 0;
-        _pos = _pos + Vec2(-1, 0);
+        _pos = _pos + Vec2<int>(-1, 0);
         _specialEnemy->setPosition(_pos);
     }
 

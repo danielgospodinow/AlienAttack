@@ -8,13 +8,13 @@
 class Player
 {
 public:
-    Player(Sprite* sprite, Vec2 pos);
+    Player(Sprite* sprite, Vec2<int> pos);
     ~Player();
 
     Sprite* getSprite() {return _sprite;}
-    Vec2 getPosition() {return _pos;}
+    Vec2<int> getPosition() {return _pos;}
 
-    void setPosition(Vec2 pos) {_pos = pos; _sprite->setPosition(pos);}
+    void setPosition(Vec2<int> pos) {_pos = pos; _sprite->setPosition(pos);}
 
     void moveRight();
     void moveLeft();
@@ -31,7 +31,7 @@ public:
 private:
     static std::vector<Bullet*> _bullets;
     Sprite* _sprite;
-    Vec2 _pos;
+    Vec2<int> _pos;
     float _shootDelay;
     float _shootDelayTimer;
     bool _isAlive;

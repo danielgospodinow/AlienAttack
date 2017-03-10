@@ -1,6 +1,6 @@
 #include "label.hpp"
 
-Label::Label(const char* text, Vec2 pos, Colors color, int fontSize) :
+Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
     _text(text), _textLenght(GameUtilities::getStrLen(text)), _pos(pos), _color(color), _fontSize(fontSize)
 {
     (_fontSize>8)?_fontSize=8:_fontSize = _fontSize;

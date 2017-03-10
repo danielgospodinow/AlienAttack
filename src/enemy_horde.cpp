@@ -2,13 +2,13 @@
 #include "play_sp_scene.hpp"
 #include "play_mp_scene.hpp"
 
-EnemyHorde::EnemyHorde(Vec2 startPos):
+EnemyHorde::EnemyHorde(Vec2<int> startPos):
     _pos(startPos)
 {
     _maxUnitWidth = 38;
     _unitWDistance = _maxUnitWidth + 6;
     _unitHDistance = 32;
-    _hordeSize = Vec2(globals::ENEMY_HORDE_WIDTH * _unitWDistance, globals::ENEMY_HORDE_HEIGHT * _unitHDistance);
+    _hordeSize = Vec2<int>(globals::ENEMY_HORDE_WIDTH * _unitWDistance, globals::ENEMY_HORDE_HEIGHT * _unitHDistance);
     _isHordeMovingRight = true;
 
     _moveTimer = 0;
@@ -102,13 +102,13 @@ void EnemyHorde::initHorde()
         for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
         {
             if(i <= globals::ENEMY_HORDE_HEIGHT / 2 - 1)
-                _enemyHorde[i][j] = new Enemy(EnemyTypes::Radkata, _pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Radkata));
+                _enemyHorde[i][j] = new Enemy(EnemyTypes::Radkata, _pos + Vec2<int>(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Radkata));
 
             else if(i > globals::ENEMY_HORDE_HEIGHT / 2 - 1 && i <= globals::ENEMY_HORDE_HEIGHT / 2 + 1)
-                _enemyHorde[i][j] = new Enemy(EnemyTypes::Sashkata, _pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Sashkata));
+                _enemyHorde[i][j] = new Enemy(EnemyTypes::Sashkata, _pos + Vec2<int>(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Sashkata));
 
             else
-                _enemyHorde[i][j] = new Enemy(EnemyTypes::Kirkata, _pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Kirkata));
+                _enemyHorde[i][j] = new Enemy(EnemyTypes::Kirkata, _pos + Vec2<int>(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Kirkata));
         }
     }
 }
@@ -147,7 +147,7 @@ void EnemyHorde::checkHordeCollision()
     }
 }
 
-bool EnemyHorde::isCollidingWithPlayer(Vec2 playerPos)
+bool EnemyHorde::isCollidingWithPlayer(Vec2<int> playerPos)
 {
     for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
     {
@@ -195,7 +195,7 @@ void EnemyHorde::moveHorde()
             return;
         }
 
-        _pos = _pos + Vec2(moveStep, 0);
+        _pos = _pos + Vec2<int>(moveStep, 0);
     }
     else
     {
@@ -206,7 +206,7 @@ void EnemyHorde::moveHorde()
             return;
         }
 
-        _pos = _pos - Vec2(moveStep, 0);
+        _pos = _pos - Vec2<int>(moveStep, 0);
     }
 
     for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
@@ -217,13 +217,13 @@ void EnemyHorde::moveHorde()
                 continue;
 
             if(i <= globals::ENEMY_HORDE_HEIGHT / 2 - 1)
-                _enemyHorde[i][j]->setPosition(_pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Radkata));
+                _enemyHorde[i][j]->setPosition(_pos + Vec2<int>(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Radkata));
 
             else if(i > globals::ENEMY_HORDE_HEIGHT / 2 - 1 && i <= globals::ENEMY_HORDE_HEIGHT / 2 + 1)
-                _enemyHorde[i][j]->setPosition(_pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Sashkata));
+                _enemyHorde[i][j]->setPosition(_pos + Vec2<int>(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Sashkata));
 
             else
-                _enemyHorde[i][j]->setPosition(_pos + Vec2(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Kirkata));
+                _enemyHorde[i][j]->setPosition(_pos + Vec2<int>(j * _unitWDistance, i * _unitHDistance) + getEnemyOffsetInHorde(Kirkata));
         }
     }
 }
@@ -247,13 +247,13 @@ void EnemyHorde::hordeShoot()
 
         Mix_PlayChannel(-1, _shootSound, 0);
         int shooterIndex = avaivableShooters.at(GameUtilities::getRandomNumber(0, avaivableShooters.size() - 1));
-        _hordeBullets.push_back(new Bullet(new Sprite("sprites/enemyBullet.png", {0, 0, 4, 25}), _enemyHorde[i][shooterIndex]->getPosition() + Vec2(_enemyHorde[i][shooterIndex]->getSize().w/2, _enemyHorde[i][shooterIndex]->getSize().h), false));
+        _hordeBullets.push_back(new Bullet(new Sprite("sprites/enemyBullet.png", {0, 0, 4, 25}), _enemyHorde[i][shooterIndex]->getPosition() + Vec2<int>(_enemyHorde[i][shooterIndex]->getSize().w/2, _enemyHorde[i][shooterIndex]->getSize().h), false));
     }
 }
 
-Vec2 EnemyHorde::getEnemyOffsetInHorde(EnemyTypes type)
+Vec2<int> EnemyHorde::getEnemyOffsetInHorde(EnemyTypes type)
 {
-    Vec2 offset = Vec2(0,0);
+    Vec2<int> offset = Vec2<int>(0,0);
 
     switch (type)
     {

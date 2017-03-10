@@ -10,7 +10,7 @@ Button::Button(Label* label, std::function<void()> func):
 
 void Button::update()
 {
-    Vec2 mouseCoords = Vec2(SDL_Components::getEvent()->motion.x, SDL_Components::getEvent()->motion.y);
+    Vec2<int> mouseCoords = Vec2<int>(SDL_Components::getEvent()->motion.x, SDL_Components::getEvent()->motion.y);
     bool mouseOnTarget = (mouseCoords.x >= _label->getRect().x + _label->getOffset().x && mouseCoords.x <= _label->getRect().x + _label->getOffset().x + _label->getRect().w) &&
             (mouseCoords.y >= _label->getRect().y + _label->getOffset().y && mouseCoords.y <= _label->getRect().y + _label->getOffset().y + _label->getRect().h);
 

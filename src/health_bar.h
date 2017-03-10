@@ -15,7 +15,7 @@ public:
 
 private:
     Sprite* _healthBar;
-    Vec2 _pos;
+    Vec2<int> _pos;
     int _lives;
 };
 

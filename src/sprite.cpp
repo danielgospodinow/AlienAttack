@@ -2,7 +2,7 @@
 
 Sprite::Sprite(const char* imageLocation, SDL_Rect sizeRect)
 {
-    _position = Vec2(sizeRect.x, sizeRect.y);
+    _position = Vec2<int>(sizeRect.x, sizeRect.y);
     _posnsizeRect = sizeRect;
     _texture = IMG_LoadTexture(SDL_Components::getRenderer(), imageLocation);
     _cropRect = {0, 0, 0, 0};
@@ -14,7 +14,7 @@ Sprite::Sprite(const char* imageLocation, SDL_Rect sizeRect)
 
 Sprite::Sprite(const char* imageLocation, SDL_Rect sizeRect, SDL_Rect cropRect)
 {
-    _position = Vec2(sizeRect.x, sizeRect.y);
+    _position = Vec2<int>(sizeRect.x, sizeRect.y);
     _posnsizeRect = sizeRect;
     _cropRect = cropRect;
     _texture = IMG_LoadTexture(SDL_Components::getRenderer(), imageLocation);
@@ -51,7 +51,7 @@ void Sprite::setupSprite(SDL_Texture * texture, SDL_Rect cropRect, SDL_Rect posn
     setPosnsizeRect(posnsizeRect);
 }
 
-void Sprite::setPosition(Vec2 position)
+void Sprite::setPosition(Vec2<int> position)
 {
     _position = position;
 	_posnsizeRect.x = position.x;
@@ -65,7 +65,7 @@ void Sprite::setAlpha(int alpha)
     SDL_SetTextureAlphaMod(_texture, alpha);
 }
 
-Vec2 Sprite::getPosition()
+Vec2<int> Sprite::getPosition()
 {
     return _position;
 }
