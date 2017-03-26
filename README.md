@@ -8,7 +8,7 @@
 Single-player and Multiplayer arcade game similar to **Space Invaders** made with 
 C++ and SDL
 
-######Development screenshots:
+###### Development screenshots:
 <p align="center">
   <img src = "http://i.imgur.com/jONgFuv.png"/>
 </p>
