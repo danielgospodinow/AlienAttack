@@ -28,5 +28,8 @@ void HealthBar::update()
 
 void HealthBar::reduce()
 {
+    if(_lives <= -1)
+        return;
+
     _lives -= 1;
 }

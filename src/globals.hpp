@@ -15,6 +15,8 @@
 #include <thread>
 #include <chrono>
 
+#define erase_p(pobj) {delete pobj; pobj = NULL;}
+
 using namespace std;
 
 #include "vec2.hpp"
@@ -45,6 +47,8 @@ namespace globals
     const int ENEMY_HORDE_HEIGHT = 5;
 
     const int BARRICADES_SIZE = 4;
+
+    const int PLAYER_HEALTH = 3;
 }
 
 #endif

@@ -132,9 +132,9 @@ void EnemyHorde::checkHordeCollision()
                 {
                     switch (_enemyHorde[i][j]->getType())
                     {
-                    case Radkata: PlaySPScene::setScore(PlaySPScene::getScore() + 30); PlayMPScene::setScore(PlaySPScene::getScore() + 30); break;
-                    case Sashkata:PlaySPScene::setScore(PlaySPScene::getScore() + 20); PlayMPScene::setScore(PlaySPScene::getScore() + 20); break;
-                    case Kirkata:PlaySPScene::setScore(PlaySPScene::getScore() + 10); PlayMPScene::setScore(PlaySPScene::getScore() + 10); break;
+                    case Radkata: GameUtilities::setScore(GameUtilities::getScore() + 30);
+                    case Sashkata: GameUtilities::setScore(GameUtilities::getScore() + 20);
+                    case Kirkata: GameUtilities::setScore(GameUtilities::getScore() + 10);
                     case Genio: break;
                     }
 

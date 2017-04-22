@@ -29,7 +29,7 @@ Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
     _rect.y = _pos.y - _rect.h / 2;
 }
 
-void Label::setText(const char *text)
+void Label::setText(const char *text) //possible leak here
 {
     _textLenght = GameUtilities::getStrLen(text);
     SDL_Surface* surface = NULL;

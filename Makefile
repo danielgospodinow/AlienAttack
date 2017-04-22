@@ -4,8 +4,8 @@ LINKER_FLAGS = -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lpthread
 
 all: alienAttack clean_o
 
-alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o
-			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o -o AlienAttack $(LINKER_FLAGS)
+alienAttack: main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o barricades.o ui.o
+			$(CC) main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o barricades.o ui.o -o AlienAttack $(LINKER_FLAGS)
 
 
 main.o: src/main.cpp
@@ -40,6 +40,10 @@ special_monster.o:	src/special_monster.cpp
 			$(CC) $(CFLAGS) src/special_monster.cpp
 health_bar.o:	src/health_bar.cpp
 			$(CC) $(CFLAGS) src/health_bar.cpp
+barricades.o:	src/barricades.cpp
+			$(CC) $(CFLAGS) src/barricades.cpp
+ui.o:	src/ui.cpp
+			$(CC) $(CFLAGS) src/ui.cpp
 
 
 clean:

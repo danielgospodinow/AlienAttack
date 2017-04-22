@@ -1,8 +1,5 @@
 #include "play_mp_scene.hpp"
 
-int PlayMPScene::_score = 0;
-bool PlayMPScene::_labelUpToDate = true;
-
 PlayMPScene::PlayMPScene() : Scene()
 {
     Sprite* playerSprite = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64});
@@ -45,13 +42,14 @@ PlayMPScene::PlayMPScene() : Scene()
     _scoreTextLabel->setOffset(Vec2<int>(_scoreTextLabel->getRect().w / 1.9f, _scoreTextLabel->getRect().h * 0.8f));
     _scoreNumLabel = new Label("0", Vec2<int>(_scoreTextLabel->getPos().x + _scoreTextLabel->getRect().w * 1.5f, _scoreTextLabel->getOffset().y), Colors::Green, 3);
 
-    _introMusic = Mix_LoadMUS("sounds/whatIsLove.mp3");
+    _introMusic = Mix_LoadMUS("sounds/whatIsLove.wav");
     Mix_PlayMusic(_introMusic, -1);
 
     _healthBar = new HealthBar(3);
     _healthBarTwo = new HealthBar(3, true);
 
-    _score = 0;
+    _lastScore = 0;
+    GameUtilities::setScore(0);
 }
 
 PlayMPScene::~PlayMPScene()
@@ -272,10 +270,10 @@ void PlayMPScene::handleUpdating()
 
     _enemyHorde->update(_deltaTime);
 
-    if(!_labelUpToDate)
+    if(_lastScore != GameUtilities::getScore())
     {
-        _labelUpToDate = true;
-        _scoreNumLabel->setText(to_string(_score).c_str());
+        _lastScore = GameUtilities::getScore();
+        _scoreNumLabel->setText(to_string(GameUtilities::getScore()).c_str());
     }
 
     GameUtilities::renderText(_scoreTextLabel->getTexture(), _scoreTextLabel->getRect(), _scoreTextLabel->getOffset());
@@ -284,14 +282,17 @@ void PlayMPScene::handleUpdating()
 
 void PlayMPScene::handleSpecialEnemy()
 {
-    for(Uint32 j=0; j<Player::getBullets().size(); j++)
+    if(!_specialEnemy->isDead())
     {
-        Bullet* currentBullet = Player::getBullets().at(j);
-        if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
+        for(Uint32 j=0; j<Player::getBullets().size(); j++)
         {
-            setScore(getScore() + 50);
-            currentBullet->destroy();
-            _specialEnemy->kill();
+            Bullet* currentBullet = Player::getBullets().at(j);
+            if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
+            {
+                GameUtilities::setScore(GameUtilities::getScore() + 100);
+                currentBullet->destroy();
+                _specialEnemy->kill();
+            }
         }
     }
 

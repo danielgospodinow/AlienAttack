@@ -8,6 +8,8 @@
 #include "enemy_horde.hpp"
 #include "special_monster.hpp"
 #include "health_bar.h"
+#include "barricades.hpp"
+#include "ui.hpp"
 
 class PlaySPScene : public Scene
 {
@@ -15,9 +17,6 @@ public:
     PlaySPScene();
     virtual ~PlaySPScene() override;
     virtual void update() override;
-
-    static int getScore() {return _score;}
-    static void setScore(int score) {_score = score; _labelUpToDate = false;}
 
 private:
     void handleDeltaTime();
@@ -29,6 +28,14 @@ private:
     bool handleDeadPlayer();
     void handleSpecialEnemy();
 
+    UI* _ui;
+    Label* _youLoseLabel;
+    EnemyHorde* _enemyHorde;
+    SpecialMonster* _specialEnemy;
+    Mix_Music* _introMusic;
+    HealthBar* _healthBar;
+    Barricades* _barricades;
+
     Player* _player;
     bool _isPlayerMovingRight;
     bool _isPlayerMovingLeft;
@@ -38,20 +45,7 @@ private:
     long _last;
     float _deltaTime;
 
-    EnemyHorde* _enemyHorde;
-    Label* _youLoseLabel;
-    Sprite* _barricads[globals::BARRICADES_SIZE];
-
-    SpecialMonster* _specialEnemy;
-
-    static int _score;
-    Label* _scoreTextLabel;
-    Label* _scoreNumLabel;
-    static bool _labelUpToDate;
-
-    Mix_Music* _introMusic;
-
-    HealthBar* _healthBar;
+    int _lastScore;
 };
 
 #endif

@@ -15,9 +15,6 @@ public:
     virtual ~PlayMPScene() override;
     virtual void update() override;
 
-    static int getScore() {return _score;}
-    static void setScore(int score) {_score = score; _labelUpToDate = false;}
-
 private:
     void handleDeltaTime();
     bool handleInput();
@@ -49,10 +46,9 @@ private:
 
     SpecialMonster* _specialEnemy;
 
-    static int _score;
+    int _lastScore;
     Label* _scoreTextLabel;
     Label* _scoreNumLabel;
-    static bool _labelUpToDate;
 
     Mix_Music* _introMusic;
 

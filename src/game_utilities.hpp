@@ -16,6 +16,8 @@ public:
     static TTF_Font* const getFont() {return _font;}
     static int getStrLen(const char* str);
     static bool areColliding(SDL_Rect one, SDL_Rect two);
+    static int getScore() {return _score;}
+    static void setScore(int score) {_score = score;}
 
 private:
     SDL_Components* _sdlComponents;
@@ -23,6 +25,8 @@ private:
     static TTF_Font* _font;
     SDL_Surface* _surfaceMessage;
     SDL_Texture* _message;
+
+    static int _score;
 };
 
 #endif

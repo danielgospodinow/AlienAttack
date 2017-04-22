@@ -1,6 +1,7 @@
 #include "game_utilities.hpp"
 
 TTF_Font* GameUtilities::_font = NULL;
+int GameUtilities::_score = 0;
 
 GameUtilities::GameUtilities(SDL_Components* sdlComponents):
     _sdlComponents(sdlComponents)
