@@ -31,14 +31,18 @@ PlaySPScene::PlaySPScene() : Scene()
 
 PlaySPScene::~PlaySPScene()
 {
-    delete _enemyHorde;
-    delete _player;
-    delete _specialEnemy;
-    delete _barricades;
+    clearPlayScene();
     delete _youLoseLabel;
-    delete _ui;
-
     Mix_FreeMusic(_introMusic);
+}
+
+void PlaySPScene::clearPlayScene()
+{
+    erase_p(_player);
+    erase_p(_enemyHorde);
+    erase_p(_specialEnemy)
+    erase_p(_barricades);
+    erase_p(_ui);
 }
 
 void PlaySPScene::update()
@@ -176,13 +180,4 @@ bool PlaySPScene::handleInput()
     }
 
     return true;
-}
-
-void PlaySPScene::clearPlayScene()
-{
-    erase_p(_player);
-    erase_p(_enemyHorde);
-    erase_p(_specialEnemy)
-    erase_p(_barricades);
-    erase_p(_ui);
 }
