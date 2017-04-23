@@ -17,11 +17,8 @@ public:
     static void clearScenes();
 
 private:
-    SDL_Components* _sdlComponents;
     bool _isGameOver;
     static stack<Scene*> _scenesStack;
-
-    GameUtilities* _gameUtils;
 };
 
 #endif

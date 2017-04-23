@@ -4,7 +4,7 @@ SDL_Window* SDL_Components::_window = NULL;
 SDL_Renderer* SDL_Components::_renderer = NULL;
 SDL_Event* SDL_Components::_event = NULL;
 
-SDL_Components::SDL_Components()
+void SDL_Components::init()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     TTF_Init();
@@ -26,7 +26,7 @@ SDL_Components::SDL_Components()
     SDL_FreeSurface(icon);
 }
 
-SDL_Components::~SDL_Components()
+void SDL_Components::close()
 {
     Mix_CloseAudio();
     TTF_Quit();
@@ -34,4 +34,10 @@ SDL_Components::~SDL_Components()
     SDL_DestroyWindow(_window);
     SDL_DestroyRenderer(_renderer);
     delete _event;
+}
+
+void SDL_Components::setVolume(int volPercentage)
+{
+    Mix_Volume(-1, 128 * volPercentage / 100);
+    Mix_VolumeMusic(128 * volPercentage / 100);
 }

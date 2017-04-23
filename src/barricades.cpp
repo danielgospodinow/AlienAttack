@@ -57,9 +57,14 @@ void Barricades::handle(EnemyHorde* enemyHorde)
     }
 }
 
-void Barricades::draw()
+void Barricades::draw() const
 {
     for(int i=0; i<globals::BARRICADES_SIZE; i++)
         if(_barricads[i])
             _barricads[i]->draw();
+}
+
+Sprite ** const Barricades::getBarricades()
+{
+    return _barricads;
 }

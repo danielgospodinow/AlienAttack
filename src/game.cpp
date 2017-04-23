@@ -5,26 +5,28 @@ stack<Scene*> Game::_scenesStack;
 
 Game::Game()
 {
+    SDL_Components::init();
+    GameUtilities::init();
+
+    SDL_Components::setVolume(10);
+
     _isGameOver = false;
-    _sdlComponents = new SDL_Components();
-    
-    _gameUtils = new GameUtilities(_sdlComponents);
     pushScene(new MainMenuScene());
 }
 
 Game::~Game()
 {
-    delete _sdlComponents;
-    delete _gameUtils;
     clearScenes();
+    GameUtilities::close();
+    SDL_Components::close();
 }
 
 void Game::startGame()
 {
-    while(!_isGameOver && _sdlComponents->getEvent()->type != SDL_QUIT)
+    while(!_isGameOver && SDL_Components::getEvent()->type != SDL_QUIT)
     {
-        SDL_PollEvent(_sdlComponents->getEvent());
-        SDL_RenderClear(_sdlComponents->getRenderer());
+        SDL_PollEvent(SDL_Components::getEvent());
+        SDL_RenderClear(SDL_Components::getRenderer());
 
         if(_scenesStack.size() != 0)
         {
@@ -33,10 +35,10 @@ void Game::startGame()
                 currScene->update();
         }
 
-        SDL_RenderPresent(_sdlComponents->getRenderer());
+        SDL_RenderPresent(SDL_Components::getRenderer());
     }
 
-    _sdlComponents->killApp();
+    SDL_Components::killApp();
 }
 
 void Game::pushScene(Scene* scene)

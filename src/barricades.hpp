@@ -13,7 +13,9 @@ public:
     ~Barricades();
 
     void handle(EnemyHorde* enemyHorde);
-    void draw();
+    void draw() const;
+
+    Sprite** const  getBarricades();
 
 private:
     Sprite* _barricads[globals::BARRICADES_SIZE];

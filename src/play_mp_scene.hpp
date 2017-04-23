@@ -7,6 +7,8 @@
 #include "enemy_horde.hpp"
 #include "special_monster.hpp"
 #include "health_bar.h"
+#include "barricades.hpp"
+#include "ui.hpp"
 
 class PlayMPScene : public Scene
 {
@@ -35,30 +37,22 @@ private:
     bool _isPlayerTwoMovingRight;
     bool _isPlayerTwoMovingLeft;
     bool _isPlayerTwoShooting;
+    bool _isPlayerTwoAI;
+    bool _playerTwoAIRight;
+    float _playerTwoAITimer;
 
     long _now;
     long _last;
     float _deltaTime;
 
+    int _lastScore;
+
+    UI* _ui;
     EnemyHorde* _enemyHorde;
     Label* _youLoseLabel;
-    Sprite* _barricads[globals::BARRICADES_SIZE];
-
     SpecialMonster* _specialEnemy;
-
-    int _lastScore;
-    Label* _scoreTextLabel;
-    Label* _scoreNumLabel;
-
+    Barricades* _barricades;
     Mix_Music* _introMusic;
-
-    HealthBar* _healthBar;
-    HealthBar* _healthBarTwo;
-
-    bool _isPlayerTwoAI;
-    bool _playerTwoAIRight;
-    float _playerTwoAITimer;
-    vector<Bullet*>* _hordeBullets;
 };
 
 #endif
