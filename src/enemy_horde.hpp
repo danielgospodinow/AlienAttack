@@ -13,11 +13,11 @@ public:
     EnemyHorde(Vec2<int> startPos);
     ~EnemyHorde();
     void update(float deltaTime);
-    Vec2<int> getHordeSize() {return _hordeSize;}
-    Vec2<int> getHordePos() {return _pos;}
-    bool isCollidingWithPlayer(Vec2<int> playerPos);
+    Vec2<int> getHordeSize() const {return _hordeSize;}
+    Vec2<int> getHordePos() const {return _pos;}
+    bool isCollidingWithPlayer(Vec2<int> playerPos) const;
     bool isABulletColliding(SDL_Rect posnrect);
-    vector<Bullet*>* getHordeBullets() {return &_hordeBullets;}
+    bool isEmpty() const;
 
 private:
     void initHorde();

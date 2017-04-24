@@ -29,6 +29,7 @@ PlayMPScene::PlayMPScene() : Scene()
     _last = 0;
 
     _youLoseLabel = NULL;
+    _youWinLabel = NULL;
 
     _ui = new UI(true);
     _enemyHorde = new EnemyHorde(Vec2<int>(0, 50));
@@ -46,6 +47,7 @@ PlayMPScene::~PlayMPScene()
 {
     clearPlayScene();
     delete _youLoseLabel;
+    delete _youWinLabel;
     Mix_FreeMusic(_introMusic);
 }
 
@@ -64,6 +66,7 @@ void PlayMPScene::update()
     handleDeltaTime();
     if(!handleInput()) return;
     if(!handleDeadPlayer()) return;
+    if(!handleDeadHorde()) return;
     handleBarricades();
     handleSpecialEnemy();
     handlePlayer();
@@ -81,6 +84,24 @@ void PlayMPScene::handleDeltaTime()
     }
 }
 
+bool PlayMPScene::handleDeadHorde()
+{
+    if(_enemyHorde->isEmpty())
+    {
+        erase_p( _specialEnemy);
+        erase_p(_barricades);
+        erase_p(_ui);
+
+        if(!_youWinLabel)
+            _youWinLabel = new Label("You win!", globals::SCREEN_CENTER, Colors::Green, 8);
+        GameUtilities::renderText(_youWinLabel->getTexture(), _youWinLabel->getRect(), _youWinLabel->getOffset());
+
+        return false;
+    }
+
+    return true;
+}
+
 bool PlayMPScene::handleDeadPlayer()
 {
     if(!_player && !_playerTwo)
@@ -89,6 +110,7 @@ bool PlayMPScene::handleDeadPlayer()
         if(!_youLoseLabel)
             _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 8);
         GameUtilities::renderText(_youLoseLabel->getTexture(), _youLoseLabel->getRect(), _youLoseLabel->getOffset());
+
         return false;
     }
 
@@ -124,7 +146,7 @@ void PlayMPScene::handleSpecialEnemy()
 {
     if(!_specialEnemy->isDead())
     {
-        for(Uint32 j=0; j<Player::getBullets().size(); j++)
+        for(uint j=0; j<Player::getBullets().size(); j++)
         {
             Bullet* currentBullet = Player::getBullets().at(j);
             if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))

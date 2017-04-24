@@ -42,7 +42,7 @@ void Barricades::handle(EnemyHorde* enemyHorde)
         if(_barricads[i] && enemyHorde->isABulletColliding(_barricads[i]->getPosnsizeRect()))
             damageBarricade();
 
-        for(Uint32 j=0; j<Player::getBullets().size(); j++)
+        for(uint j=0; j<Player::getBullets().size(); j++)
         {
             if(!_barricads[i])
                 break;

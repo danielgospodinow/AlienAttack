@@ -3,7 +3,6 @@
 Enemy::Enemy(EnemyTypes enemyType, Vec2<int> position):
     _pos(position), _enemyType(enemyType)
 {
-    _isHit = false;
     _spriteLocation = "sprites/currentSprites.png";
 
     switch(_enemyType)

@@ -26,6 +26,7 @@ private:
     void handlePlayer();
     void handlePlayerTwo();
     bool handleDeadPlayer();
+    bool handleDeadHorde();
     void handleSpecialEnemy();
 
     Player* _player;
@@ -49,10 +50,11 @@ private:
 
     UI* _ui;
     EnemyHorde* _enemyHorde;
-    Label* _youLoseLabel;
     SpecialMonster* _specialEnemy;
     Barricades* _barricades;
     Mix_Music* _introMusic;
+    Label* _youLoseLabel;
+    Label* _youWinLabel;
 };
 
 #endif

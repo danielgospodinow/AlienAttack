@@ -26,10 +26,12 @@ private:
     void handleUpdating();
     void handlePlayer();
     bool handleDeadPlayer();
+    bool handleDeadHorde();
     void handleSpecialEnemy();
 
     UI* _ui;
     Label* _youLoseLabel;
+    Label* _youWinLabel;
     EnemyHorde* _enemyHorde;
     SpecialMonster* _specialEnemy;
     Mix_Music* _introMusic;

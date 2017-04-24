@@ -14,12 +14,11 @@
 #include <random>
 #include <thread>
 #include <chrono>
-
-#define erase_p(pobj) {delete pobj; pobj = NULL;}
-
+#include "vec2.hpp"
 using namespace std;
 
-#include "vec2.hpp"
+#define erase_p(pobj) {delete pobj; pobj = NULL;}
+typedef unsigned int uint;
 
 enum Colors
 {

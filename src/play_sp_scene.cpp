@@ -20,6 +20,7 @@ PlaySPScene::PlaySPScene() : Scene()
     GameUtilities::setScore(0);
 
     _youLoseLabel = NULL;
+    _youWinLabel = NULL;
     _ui = new UI();
     _enemyHorde = new EnemyHorde(Vec2<int>(0, 50));
     _barricades = new Barricades(_player->getPosition());
@@ -50,6 +51,7 @@ void PlaySPScene::update()
     handleDeltaTime();
     if(!handleInput()) return;
     if(!handleDeadPlayer()) return;
+    if(!handleDeadHorde()) return;
     handleBarricades();
     handleSpecialEnemy();
     handlePlayer();
@@ -69,6 +71,24 @@ void PlaySPScene::handleDeltaTime()
         _deltaTime = ((float)(_now - _last) / 1000.0f);
         _last = _now;
     }
+}
+
+bool PlaySPScene::handleDeadHorde()
+{
+    if(_enemyHorde->isEmpty())
+    {
+        erase_p( _specialEnemy);
+        erase_p(_barricades);
+        erase_p(_ui);
+
+        if(!_youWinLabel)
+            _youWinLabel = new Label("You win!", globals::SCREEN_CENTER, Colors::Green, 8);
+        GameUtilities::renderText(_youWinLabel->getTexture(), _youWinLabel->getRect(), _youWinLabel->getOffset());
+
+        return false;
+    }
+
+    return true;
 }
 
 bool PlaySPScene::handleDeadPlayer()
@@ -107,7 +127,7 @@ void PlaySPScene::handleSpecialEnemy()
 {
     if(!_specialEnemy->isDead())
     {
-        for(Uint32 j=0; j<Player::getBullets().size(); j++)
+        for(uint j=0; j<Player::getBullets().size(); j++)
         {
             Bullet* currentBullet = Player::getBullets().at(j);
             if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))

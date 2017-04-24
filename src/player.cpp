@@ -17,7 +17,7 @@ Player::~Player()
 {
     delete _sprite;
 
-    for(Uint32 i=0; i<_bullets.size(); i++)
+    for(uint i=0; i<_bullets.size(); i++)
     {
         Bullet* currentBullet = _bullets.at(i);
         if(currentBullet)
@@ -63,7 +63,7 @@ void Player::drawAndUpdate(float deltaTime)
     _moveTimer += 1 * deltaTime;
     _shootDelayTimer += 1 * deltaTime;
 
-    for (Uint32 i=0; i < _bullets.size(); i++)
+    for (uint i=0; i < _bullets.size(); i++)
     {
         Bullet* currentBullet = _bullets[i];
 

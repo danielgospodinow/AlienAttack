@@ -26,21 +26,12 @@ EnemyHorde::EnemyHorde(Vec2<int> startPos):
 EnemyHorde::~EnemyHorde()
 {
     for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
-    {
         for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
-        {
-            Enemy* currentEnemy = _enemyHorde[i][j];
-            if(currentEnemy)
-                delete currentEnemy;
-        }
-    }
+            if(_enemyHorde[i][j])
+                delete _enemyHorde[i][j];
 
-    for(Uint32 i=0; i<_hordeBullets.size(); i++)
-    {
-        Bullet* bul = _hordeBullets.at(i);
-        if(bul)
-            delete bul;
-    }
+    for(uint i=0; i<_hordeBullets.size(); i++)
+        delete _hordeBullets[i];
 
     Mix_FreeChunk(_shootSound);
     Mix_FreeChunk(_deadEnemySound);
@@ -63,33 +54,19 @@ void EnemyHorde::update(float deltaTime)
         moveHorde();
     }
 
-    Enemy* currentEnemy = NULL;
-
     for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
     {
         for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
         {
-            currentEnemy = _enemyHorde[i][j];
-
-            if(!currentEnemy)
+            if(!_enemyHorde[i][j])
                 continue;
 
-            if(currentEnemy->isDead())
-            {
-                delete currentEnemy;
-                _enemyHorde[i][j] = NULL;
-                continue;
-            }
-
-            currentEnemy->update(deltaTime);
+            _enemyHorde[i][j]->update(deltaTime);
         }
     }
 
-    for(Uint32 i=0; i<_hordeBullets.size(); i++)
-    {
-        Bullet* bul = _hordeBullets.at(i);
-        bul->update(deltaTime);
-    }
+    for(uint i=0; i<_hordeBullets.size(); i++)
+        static_cast<Bullet*>(_hordeBullets[i])->update(deltaTime);
 
     checkHordeCollision();
 }
@@ -139,15 +116,16 @@ void EnemyHorde::checkHordeCollision()
                     }
 
                     Mix_PlayChannel(-1, _deadEnemySound, 0);
-                    _enemyHorde[i][j]->die();
+                    erase_p(_enemyHorde[i][j]);
                     playerBullet->destroy();
+                    break;
                 }
             }
         }
     }
 }
 
-bool EnemyHorde::isCollidingWithPlayer(Vec2<int> playerPos)
+bool EnemyHorde::isCollidingWithPlayer(Vec2<int> playerPos) const
 {
     for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
     {
@@ -170,11 +148,11 @@ bool EnemyHorde::isABulletColliding(SDL_Rect posnrect)
 
     for(Uint32 i=0; i<_hordeBullets.size(); i++)
     {
-        currentBullet = _hordeBullets.at(i);
+        currentBullet = _hordeBullets[i];
         if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), {posnrect.x, posnrect.y, posnrect.w, posnrect.h}))
         {
             _hordeBullets.erase(std::remove(_hordeBullets.begin(), _hordeBullets.end(), currentBullet), _hordeBullets.end());
-            delete currentBullet;
+            erase_p(currentBullet);
             return true;
         }
     }
@@ -264,4 +242,14 @@ Vec2<int> EnemyHorde::getEnemyOffsetInHorde(EnemyTypes type)
     }
 
     return offset;
+}
+
+bool EnemyHorde::isEmpty() const
+{
+    for(int i=0; i<globals::ENEMY_HORDE_HEIGHT; i++)
+        for(int j=0; j<globals::ENEMY_HORDE_WIDTH; j++)
+            if(_enemyHorde[i][j])
+                return false;
+
+    return true;
 }
