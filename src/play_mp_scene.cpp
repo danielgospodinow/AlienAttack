@@ -1,64 +1,32 @@
 #include "play_mp_scene.hpp"
 
-PlayMPScene::PlayMPScene() : Scene()
+PlayMPScene::PlayMPScene() : PlayScene()
 {
-    Sprite* playerSprite = new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64});
-    Vec2<int> playerPos = Vec2<int>(globals::GAME_WIDTH / 2 - playerSprite->getPosnsizeRect().w / 2, globals::GAME_HEIGHT - playerSprite->getPosnsizeRect().h * 1.3f);
-    playerSprite->setPosition(playerPos);
-
-    _player = new Player(playerSprite, playerPos);
     _player->setPosition(_player->getSprite()->getPosition() + Vec2<int>(-_player->getSprite()->getPosnsizeRect().w * 1.8f - 5, 0));
 
     _playerTwo = new Player(new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64}), Vec2<int>(0, 0));
     _playerTwo->getSprite()->setAlpha(90);
-    _playerTwo->setPosition(playerPos + Vec2<int>(_player->getSprite()->getPosnsizeRect().w * 1.8f, 0));
+    _playerTwo->setPosition(_player->getSprite()->getPosition() + Vec2<int>(_player->getSprite()->getPosnsizeRect().w * 1.8f, 0));
     _isPlayerTwoAI = false;
     _playerTwoAIRight= false;
     _playerTwoAITimer = 0;
-
-    _isPlayerMovingRight = false;
-    _isPlayerMovingLeft = false;
-    _isPlayerShooting = false;
 
     _isPlayerTwoMovingRight = false;
     _isPlayerTwoMovingLeft = false;
     _isPlayerTwoShooting = false;
 
-    _deltaTime = 0;
-    _now = 0;
-    _last = 0;
-
-    _youLoseLabel = NULL;
-    _youWinLabel = NULL;
-
     _ui = new UI(true);
-    _enemyHorde = new EnemyHorde(Vec2<int>(0, 50));
-    _barricades = new Barricades(_player->getPosition());
-    _specialEnemy = new SpecialMonster(GameUtilities::getRandomNumber(0, 1));
-
-    _introMusic = Mix_LoadMUS("sounds/whatIsLove.wav");
-    Mix_PlayMusic(_introMusic, -1);
-
-    _lastScore = 0;
-    GameUtilities::setScore(0);
 }
 
 PlayMPScene::~PlayMPScene()
 {
     clearPlayScene();
-    delete _youLoseLabel;
-    delete _youWinLabel;
-    Mix_FreeMusic(_introMusic);
 }
 
 void PlayMPScene::clearPlayScene()
 {
-    erase_p(_player);
     erase_p(_playerTwo);
-    erase_p(_enemyHorde);
-    erase_p( _specialEnemy);
-    erase_p(_barricades);
-    erase_p(_ui);
+    PlayScene::clearPlayScene();
 }
 
 void PlayMPScene::update()
@@ -74,34 +42,6 @@ void PlayMPScene::update()
     handleUpdating();
 }
 
-void PlayMPScene::handleDeltaTime()
-{
-    _now = SDL_GetTicks();
-    if(_now > _last)
-    {
-        _deltaTime = ((float)(_now - _last) / 1000.0f);
-        _last = _now;
-    }
-}
-
-bool PlayMPScene::handleDeadHorde()
-{
-    if(_enemyHorde->isEmpty())
-    {
-        erase_p( _specialEnemy);
-        erase_p(_barricades);
-        erase_p(_ui);
-
-        if(!_youWinLabel)
-            _youWinLabel = new Label("You win!", globals::SCREEN_CENTER, Colors::Green, 8);
-        GameUtilities::renderText(_youWinLabel->getTexture(), _youWinLabel->getRect(), _youWinLabel->getOffset());
-
-        return false;
-    }
-
-    return true;
-}
-
 bool PlayMPScene::handleDeadPlayer()
 {
     if(!_player && !_playerTwo)
@@ -115,11 +55,6 @@ bool PlayMPScene::handleDeadPlayer()
     }
 
     return true;
-}
-
-void PlayMPScene::handleBarricades()
-{
-    _barricades->handle(_enemyHorde);
 }
 
 void PlayMPScene::handleUpdating()
@@ -140,48 +75,6 @@ void PlayMPScene::handleUpdating()
         _ui->updateScoreBoard(_lastScore);
     }
     _ui->drawScoreBoard();
-}
-
-void PlayMPScene::handleSpecialEnemy()
-{
-    if(!_specialEnemy->isDead())
-    {
-        for(uint j=0; j<Player::getBullets().size(); j++)
-        {
-            Bullet* currentBullet = Player::getBullets().at(j);
-            if(GameUtilities::areColliding(currentBullet->getSprite()->getPosnsizeRect(), _specialEnemy->getSize()))
-            {
-                GameUtilities::setScore(GameUtilities::getScore() + 100);
-                currentBullet->destroy();
-                _specialEnemy->kill();
-            }
-        }
-    }
-
-    _specialEnemy->update(_deltaTime);
-}
-
-void PlayMPScene::handlePlayer()
-{
-    if(!_player)
-        return;
-
-    if(_enemyHorde->isCollidingWithPlayer(_player->getPosition()) || _enemyHorde->isABulletColliding({_player->getPosition().x, _player->getPosition().y, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}))
-    {
-        _ui->reduceHealthBarOne();
-        if(_ui->getPlayerOneLives()  <= -1)
-        {
-            erase_p(_player);
-            return;
-        }
-    }
-
-    if(_isPlayerMovingLeft)
-        _player->moveLeft();
-    else if(_isPlayerMovingRight)
-        _player->moveRight();
-    if(_isPlayerShooting)
-        _player->shoot();
 }
 
 void PlayMPScene::handlePlayerTwo()
