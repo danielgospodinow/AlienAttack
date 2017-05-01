@@ -5,6 +5,7 @@
 #include "game.hpp"
 #include "play_sp_scene.hpp"
 #include "play_mp_scene.hpp"
+#include "highscores_scene.hpp"
 
 class MainMenuScene : public Scene
 {
@@ -20,6 +21,7 @@ private:
     Button* _playSPButton;
     Button* _playMPButton;
     Button* _creditialsButton;
+    Button* _highScoresButton;
 
     Mix_Music* _introMusic;
 };

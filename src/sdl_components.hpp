@@ -17,6 +17,8 @@ public:
     static void killApp();
 
 private:
+    SDL_Components() {}
+
     static SDL_Window* _window;
     static SDL_Renderer* _renderer;
     static SDL_Event* _event;

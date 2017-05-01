@@ -13,8 +13,11 @@ MainMenuScene::MainMenuScene() : Scene()
 
     _playMPButton = new Button(new Label("Multiplayer", Vec2<int>(globals::SCREEN_CENTER), Colors::White, 5), []() { Game::pushScene(new PlayMPScene()); });
 
-    _creditialsButton = new Button(new Label("About", Vec2<int>(globals::SCREEN_CENTER), Colors::White, 5), []() { cout << "You clicked Credits" << endl; });
+    _creditialsButton = new Button(new Label("About", Vec2<int>(globals::SCREEN_CENTER), Colors::White, 5), []() { cout << "You clicked Credits" << endl; GameUtilities::printScore(); });
     _creditialsButton->getLabel()->setOffset(Vec2<int>(0, (_creditialsButton->getLabel()->getRect().h * 2)));
+
+    _highScoresButton = new Button(new Label("Highscores", Vec2<int>(globals::SCREEN_CENTER), Colors::White, 5), [&](){ Game::pushScene(new HighscoreScene()); });
+    _highScoresButton->getLabel()->setOffset(Vec2<int>(0, (_creditialsButton->getLabel()->getRect().h * 4)));
 
     _introMusic = Mix_LoadMUS("sounds/introMusic.wav");
     Mix_PlayMusic(_introMusic, -1);
@@ -27,6 +30,7 @@ MainMenuScene::~MainMenuScene()
     delete _playSPButton;
     delete _playMPButton;
     delete _creditialsButton;
+    delete _highScoresButton;
     Mix_FreeMusic(_introMusic);
 }
 
@@ -38,4 +42,5 @@ void MainMenuScene::update()
     _playSPButton->update();
     _playMPButton->update();
     _creditialsButton->update();
+    _highScoresButton->update();
 }

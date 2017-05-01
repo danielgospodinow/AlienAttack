@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -c -Wall
 LINKER_FLAGS = -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lpthread
-OBJ = main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o barricades.o ui.o play_scene.o
+OBJ = main.o game.o sdl_components.o game_utilities.o main_menu_scene.o button.o label.o play_sp_scene.o sprite.o player.o bullet.o enemy.o enemy_horde.o special_monster.o health_bar.o play_mp_scene.o barricades.o ui.o play_scene.o highscores_scene.o
 
 all: alienAttack clean_o
 
@@ -47,6 +47,8 @@ ui.o:	src/ui.cpp
 			$(CC) $(CFLAGS) src/ui.cpp
 play_scene.o:	src/play_scene.cpp
 			$(CC) $(CFLAGS) src/play_scene.cpp
+highscores_scene.o:	src/highscores_scene.cpp
+			$(CC) $(CFLAGS) src/highscores_scene.cpp
 
 clean:
 			rm -rf *.o AlienAttack

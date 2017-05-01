@@ -84,7 +84,10 @@ bool PlayScene::handleDeadHorde()
         erase_p(_ui);
 
         if(!_youWinLabel)
+        {
             _youWinLabel = new Label("You win!", globals::SCREEN_CENTER, Colors::Green, 8);
+            GameUtilities::updateHighScores();
+        }
         GameUtilities::renderText(_youWinLabel->getTexture(), _youWinLabel->getRect(), _youWinLabel->getOffset());
 
         return false;
@@ -99,7 +102,10 @@ bool PlayScene::handleDeadPlayer()
     {
         clearPlayScene();
         if(!_youLoseLabel)
+        {
             _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 8);
+            GameUtilities::updateHighScores();
+        }
         GameUtilities::renderText(_youLoseLabel->getTexture(), _youLoseLabel->getRect(), _youLoseLabel->getOffset());
 
         return false;

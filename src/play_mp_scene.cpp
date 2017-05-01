@@ -6,7 +6,7 @@ PlayMPScene::PlayMPScene() : PlayScene()
 
     _playerTwo = new Player(new Sprite("sprites/currentSprites.png", {0, 0, globals::PLAYER_SPRITE_SIZE_X, globals::PLAYER_SPRITE_SIZE_Y}, {0,685,104,64}), Vec2<int>(0, 0));
     _playerTwo->getSprite()->setAlpha(90);
-    _playerTwo->setPosition(_player->getSprite()->getPosition() + Vec2<int>(_player->getSprite()->getPosnsizeRect().w * 1.8f, 0));
+    _playerTwo->setPosition(_player->getSprite()->getPosition() + Vec2<int>(_player->getSprite()->getPosnsizeRect().w * 1.8f * 2, 0));
     _isPlayerTwoAI = false;
     _playerTwoAIRight= false;
     _playerTwoAITimer = 0;
@@ -48,7 +48,10 @@ bool PlayMPScene::handleDeadPlayer()
     {
         clearPlayScene();
         if(!_youLoseLabel)
+        {
             _youLoseLabel = new Label("You lose!", globals::SCREEN_CENTER, Colors::Red, 8);
+            GameUtilities::updateHighScores();
+        }
         GameUtilities::renderText(_youLoseLabel->getTexture(), _youLoseLabel->getRect(), _youLoseLabel->getOffset());
 
         return false;

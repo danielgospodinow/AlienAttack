@@ -48,6 +48,8 @@ namespace globals
     const int BARRICADES_SIZE = 4;
 
     const int PLAYER_HEALTH = 3;
+
+    const int MAX_HIGHSCORES = 10;
 }
 
 #endif

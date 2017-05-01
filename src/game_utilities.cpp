@@ -2,10 +2,13 @@
 
 TTF_Font* GameUtilities::_font = NULL;
 int GameUtilities::_score = 0;
+const char* GameUtilities::_highScoresFilePath = "data/highscores.txt";
+int GameUtilities::_highScores[globals::MAX_HIGHSCORES] = {0};
 
 void GameUtilities::init()
 {
     _font = TTF_OpenFont("fonts/raidercrusader.ttf", 24);
+    readHighScores();
 }
 
 void GameUtilities::close()
@@ -54,6 +57,86 @@ bool GameUtilities::areColliding(SDL_Rect one, SDL_Rect two)
     return false;
 }
 
+void GameUtilities::readHighScores()
+{
+    ifstream highScoresFile (_highScoresFilePath /*,ios::in*/ );
+
+    if(!highScoresFile.is_open())
+    {
+        cout << "Problem opening highscores file";
+        return;
+    }
+
+    int iter = 0;
+    while(iter < globals::MAX_HIGHSCORES && highScoresFile >> _highScores[iter++]);
+
+    selectionSort(_highScores, globals::MAX_HIGHSCORES);
+
+    highScoresFile.close();
+}
+
+void GameUtilities::writeHighScores()
+{
+    ofstream highScoresFile (_highScoresFilePath, ios::out | ios::trunc);
+
+    if(!highScoresFile.is_open())
+    {
+        cout << "Problem opening highscores file";
+        return;
+    }
+
+    for(int i=0; i<globals::MAX_HIGHSCORES; i++)
+        highScoresFile << _highScores[i] << "\n";
+}
+
+void GameUtilities::updateHighScores()
+{
+    if(_score < _highScores[globals::MAX_HIGHSCORES - 1])
+        return;
+
+    for(int i=0; i<globals::MAX_HIGHSCORES; i++) //insertion algorithm
+    {
+        if(_score > _highScores[i])
+        {
+            for(int j=globals::MAX_HIGHSCORES - 1; j>i; j--)
+                _highScores[j] = _highScores[j - 1];
+
+            _highScores[i] = _score;
+            break;
+        }
+    }
+
+    writeHighScores();
+}
+
 TTF_Font* const GameUtilities::getFont() {return _font;}
 int GameUtilities::getScore() {return _score;}
 void GameUtilities::setScore(int score) {_score = score;}
+
+template <typename T>
+void GameUtilities::selectionSort(T* arr, int size)
+{
+    for(int i=0; i<size - 1; i++)
+    {
+        int maxIndex = i;
+
+        for(int j=i + 1; j<size; j++)
+            if(arr[j] > arr[maxIndex])
+                maxIndex = j;
+
+        swap(arr[i], arr[maxIndex]);
+    }
+}
+
+template <typename T>
+void GameUtilities::swap(T& one, T& two)
+{
+    T temp = one;
+    one = two;
+    two = temp;
+}
+
+int* GameUtilities::getHighscores()
+{
+    return _highScores;
+}
