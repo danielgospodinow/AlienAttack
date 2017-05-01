@@ -3,7 +3,7 @@
 
 #include "globals.hpp"
 #include "label.hpp"
-#include "health_bar.h"
+#include "health_bar.hpp"
 
 class UI
 {

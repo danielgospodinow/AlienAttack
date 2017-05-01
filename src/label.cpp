@@ -29,6 +29,11 @@ Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
     _rect.y = _pos.y - _rect.h / 2;
 }
 
+Label::~Label()
+{
+    SDL_DestroyTexture(_texture);
+}
+
 void Label::setText(const char *text) //possible leak here
 {
     _textLenght = GameUtilities::getStrLen(text);
@@ -54,7 +59,7 @@ void Label::setText(const char *text) //possible leak here
     _rect.y = _pos.y - _rect.h / 2;
 }
 
-void Label::changeLabelColor(Colors color)
+void Label::setLabelColor(Colors color)
 {
     if(_color == color)
         return;
@@ -74,3 +79,13 @@ void Label::changeLabelColor(Colors color)
     SDL_SetTextureColorMod(_texture, fontColor.r, fontColor.g, fontColor.b);
     _color = color;
 }
+
+SDL_Texture* Label::getTexture() const {return _texture;}
+const char* Label::getText () const {return _text;}
+int Label::getTextLenght() const {return _textLenght;}
+Vec2<int> Label::getPos() const {return _pos;}
+Colors Label::getColor() const {return _color;}
+SDL_Rect Label::getRect() const {return _rect;}
+Vec2<int> Label::getOffset () const {return _offset;}
+
+void Label::setOffset(Vec2<int> offset) {_offset = offset;}

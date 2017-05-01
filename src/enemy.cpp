@@ -44,3 +44,9 @@ void Enemy::update(float deltaTime)
     else
         _sprite02->draw();
 }
+
+Vec2<int> Enemy::getPosition() const {return _pos;}
+SDL_Rect Enemy::getSize() const {return _sizeRect;}
+EnemyTypes Enemy::getType() const {return _enemyType;}
+
+void Enemy::setPosition (Vec2<int> const& pos) {_pos = pos; _sizeRect.x = pos.x; _sizeRect.y = pos.y;}

@@ -24,11 +24,9 @@ Sprite::Sprite(const char* imageLocation, SDL_Rect sizeRect, SDL_Rect cropRect)
 		cout << "Couldn't load image!" << endl;
 }
 
-Sprite::Sprite(Sprite &sprite)
+Sprite::Sprite(const Sprite& sprite)
 {
-    _texture = sprite.getTexture();
-    _cropRect = sprite.getCropRect();
-    _posnsizeRect = sprite.getPosnsizeRect();
+    *this = sprite;
 }
 
 Sprite::~Sprite()
@@ -36,7 +34,16 @@ Sprite::~Sprite()
 	SDL_DestroyTexture(_texture);
 }
 
-void Sprite::draw()
+Sprite& Sprite::operator=(const Sprite& sprite)
+{
+    _texture = sprite.getTexture();
+    _cropRect = sprite.getCropRect();
+    _posnsizeRect = sprite.getPosnsizeRect();
+
+    return *this;
+}
+
+void Sprite::draw() const
 {
     if(_cropRect.w == 0)
         SDL_RenderCopy(SDL_Components::getRenderer(), _texture, NULL, &_posnsizeRect);
@@ -65,7 +72,7 @@ void Sprite::setAlpha(int alpha)
     SDL_SetTextureAlphaMod(_texture, alpha);
 }
 
-Vec2<int> Sprite::getPosition()
+Vec2<int> Sprite::getPosition() const
 {
     return _position;
 }
@@ -85,17 +92,22 @@ void Sprite::setPosnsizeRect(SDL_Rect posnsizeRect)
     _posnsizeRect = posnsizeRect;
 }
 
-SDL_Texture * Sprite::getTexture()
+SDL_Texture * Sprite::getTexture() const
 {
     return _texture;
 }
 
-SDL_Rect Sprite::getCropRect()
+SDL_Rect Sprite::getCropRect() const
 {
     return _cropRect;
 }
 
-SDL_Rect Sprite::getPosnsizeRect()
+SDL_Rect Sprite::getPosnsizeRect() const
 {
     return _posnsizeRect;
+}
+
+int Sprite::getAlpha() const
+{
+     return _alpha;
 }

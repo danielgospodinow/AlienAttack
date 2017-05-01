@@ -89,3 +89,34 @@ void Player::shoot()
     _shootDelayTimer = 0;
     _bullets.push_back(new Bullet(new Sprite("sprites/bullet.png", {0,0,4,25}), Vec2<int>(_pos.x + _sprite->getPosnsizeRect().w / 2 - 1, _pos.y - 25)));
 }
+
+Sprite* Player::getSprite() const
+{
+    return _sprite;
+}
+
+Vec2<int> Player::getPosition() const
+{
+    return _pos;
+}
+
+bool Player::isAlive() const
+{
+    return _isAlive;
+}
+
+void Player::setPosition(Vec2<int> pos)
+{
+    _pos = pos;
+    _sprite->setPosition(pos);
+}
+
+std::vector<Bullet*> Player::getBullets()
+{
+    return _bullets;
+}
+
+void Player::kill()
+{
+    _isAlive = false;
+}

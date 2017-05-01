@@ -13,10 +13,11 @@ public:
     ~Enemy();
     void update(float deltaTime);
 
-    void setPosition (Vec2<int> const& pos) {_pos = pos; _sizeRect.x = pos.x; _sizeRect.y = pos.y;}
-    Vec2<int> getPosition() const {return _pos;}
-    SDL_Rect getSize() const {return _sizeRect;}
-    EnemyTypes getType() const {return _enemyType;}
+    void setPosition (Vec2<int> const& pos);
+
+    Vec2<int> getPosition() const;
+    SDL_Rect getSize() const;
+    EnemyTypes getType() const;
 
 private:
     Sprite* _sprite01;

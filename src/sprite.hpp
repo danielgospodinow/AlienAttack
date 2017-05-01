@@ -9,19 +9,12 @@ class Sprite
 public:
 	Sprite(const char* imageLocation, SDL_Rect sizeRect);
 	Sprite(const char* imageLocation, SDL_Rect sizeRect, SDL_Rect cropRect);
-	Sprite(Sprite& sprite);
+    Sprite(const Sprite &sprite);
 	~Sprite();
 
-	Sprite& operator=(Sprite& sprite)
-	{
-        _texture = sprite.getTexture();
-        _cropRect = sprite.getCropRect();
-        _posnsizeRect = sprite.getPosnsizeRect();
+    Sprite& operator=(const Sprite& sprite);
 
-		return *this;
-	}
-
-	void draw();
+    void draw() const;
 
 	void setupSprite(SDL_Texture* texture, SDL_Rect cropRect, SDL_Rect posnsizeRect);
 
@@ -31,11 +24,11 @@ public:
 	void setPosnsizeRect(SDL_Rect posnsizeRect);
     void setAlpha(int alpha);
 
-	SDL_Texture* getTexture();
-	SDL_Rect getCropRect();
-	SDL_Rect getPosnsizeRect();
-    Vec2<int> getPosition();
-    int getAlpha() {return _alpha;}
+    SDL_Texture* getTexture() const;
+    SDL_Rect getCropRect() const;
+    SDL_Rect getPosnsizeRect() const;
+    Vec2<int> getPosition() const;
+    int getAlpha() const;
 
 private:
 	SDL_Texture* _texture;

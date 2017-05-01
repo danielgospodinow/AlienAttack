@@ -8,6 +8,11 @@ Button::Button(Label* label, std::function<void()> func):
     _clickedOnce = false;
 }
 
+Button::~Button()
+{
+    delete _label;
+}
+
 void Button::update()
 {
     Vec2<int> mouseCoords = Vec2<int>(SDL_Components::getEvent()->motion.x, SDL_Components::getEvent()->motion.y);
@@ -17,9 +22,9 @@ void Button::update()
     if(SDL_Components::getEvent()->type == SDL_MOUSEMOTION)
     {
         if(mouseOnTarget)
-            _label->changeLabelColor(Colors::Red);
+            _label->setLabelColor(Colors::Red);
         else
-            _label->changeLabelColor(Colors::White);
+            _label->setLabelColor(Colors::White);
     }
     else if(SDL_Components::getEvent()->type == SDL_MOUSEBUTTONDOWN && !_clickedOnce)
     {
@@ -36,3 +41,5 @@ void Button::update()
 
     GameUtilities::renderText(_label->getTexture(), _label->getRect(), _label->getOffset());
 }
+
+Label* Button::getLabel() const {return _label;}

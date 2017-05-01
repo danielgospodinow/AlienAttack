@@ -9,15 +9,18 @@ class SpecialMonster
 {
 public:
     SpecialMonster(bool leftSpawn);
-    ~SpecialMonster() {delete _specialEnemy;}
-    SDL_Rect getSize() {return _specialEnemy->getSize();}
+    ~SpecialMonster();
+
     void update(float deltaTime);
-    bool isDead() {return _isDead;}
-    void kill () {_isDead = true;}
+
+    SDL_Rect getSize() const;
+    bool isDead() const;
+    void kill();
 
 private:
     Enemy* _specialEnemy;
     Vec2<int> _pos;
+
     float _timer;
     float _time;
     bool _isSpawned;

@@ -7,9 +7,11 @@ class Button
 {
 public:
     Button(Label* label, std::function<void()> func);
-    ~Button() {delete _label;}
+    ~Button();
+
     void update();
-    Label* getLabel() {return _label;}
+
+    Label* getLabel() const;
 
 private:
     Label* _label;

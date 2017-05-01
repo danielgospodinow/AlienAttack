@@ -9,11 +9,14 @@ class Bullet
 public:
     Bullet(Sprite* sprite, Vec2<int> pos, bool travelUp = true);
     ~Bullet();
+
     void update(float deltaTime);
-    bool isDestroyed() {return _isDestroyed;}
-    void destroy() {_isDestroyed = true;}
+
+    bool isDestroyed() const;
+    Sprite* getSprite() const;
+
+    void destroy();
     void setPosition(Vec2<int> pos);
-    Sprite* getSprite() {return _sprite;}
 
 private:
     Sprite* _sprite;

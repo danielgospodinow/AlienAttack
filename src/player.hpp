@@ -11,10 +11,11 @@ public:
     Player(Sprite* sprite, Vec2<int> pos);
     ~Player();
 
-    Sprite* getSprite() {return _sprite;}
-    Vec2<int> getPosition() {return _pos;}
+    Sprite* getSprite() const;
+    Vec2<int> getPosition() const;
+    bool isAlive() const;
 
-    void setPosition(Vec2<int> pos) {_pos = pos; _sprite->setPosition(pos);}
+    void setPosition(Vec2<int> pos);
 
     void moveRight();
     void moveLeft();
@@ -23,10 +24,9 @@ public:
 
     void drawAndUpdate(float deltaTime);
 
-    static std::vector<Bullet*> getBullets() {return _bullets;}
+    static std::vector<Bullet*> getBullets();
 
-    void kill() {_isAlive = false;}
-    bool isAlive() {return _isAlive;}
+    void kill();
 
 private:
     static std::vector<Bullet*> _bullets;

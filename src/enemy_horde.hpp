@@ -12,9 +12,11 @@ class EnemyHorde
 public:
     EnemyHorde(Vec2<int> startPos);
     ~EnemyHorde();
+
     void update(float deltaTime);
-    Vec2<int> getHordeSize() const {return _hordeSize;}
-    Vec2<int> getHordePos() const {return _pos;}
+
+    Vec2<int> getHordeSize() const;
+    Vec2<int> getHordePos() const;
     bool isCollidingWithPlayer(Vec2<int> playerPos) const;
     bool isABulletColliding(SDL_Rect posnrect);
     bool isEmpty() const;

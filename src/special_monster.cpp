@@ -11,6 +11,11 @@ SpecialMonster::SpecialMonster(bool leftSpawn):
     _moveTimer = 0;
 }
 
+SpecialMonster::~SpecialMonster()
+{
+    delete _specialEnemy;
+}
+
 void SpecialMonster::update(float deltaTime)
 {
     if(_isDead)
@@ -60,4 +65,19 @@ void SpecialMonster::update(float deltaTime)
     }
 
     _specialEnemy->update(deltaTime);
+}
+
+void SpecialMonster::kill()
+{
+     _isDead = true;
+}
+
+bool SpecialMonster::isDead() const
+{
+    return _isDead;
+}
+
+SDL_Rect SpecialMonster::getSize() const
+{
+    return _specialEnemy->getSize();
 }

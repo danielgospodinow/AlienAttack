@@ -1,4 +1,4 @@
-#include "health_bar.h"
+#include "health_bar.hpp"
 
 HealthBar::HealthBar(int lives,  bool playerTwo):
     _lives(lives)
@@ -33,3 +33,5 @@ void HealthBar::reduce()
 
     _lives -= 1;
 }
+
+int HealthBar::getLives() const {return _lives;}

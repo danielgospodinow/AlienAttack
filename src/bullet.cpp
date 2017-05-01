@@ -52,3 +52,8 @@ void Bullet::update(float deltaTime)
 
     _sprite->draw();
 }
+
+bool Bullet::isDestroyed() const {return _isDestroyed;}
+Sprite* Bullet::getSprite() const {return _sprite;}
+
+void Bullet::destroy() {_isDestroyed = true;}

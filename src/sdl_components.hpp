@@ -8,11 +8,13 @@ class SDL_Components
 public:
     static void init();
     static void close();
-    static SDL_Window* const getWindow() {return _window;}
-    static SDL_Renderer* const getRenderer() {return _renderer;}
-    static SDL_Event* const getEvent() {return _event;}
+
+    static SDL_Window* const getWindow();
+    static SDL_Renderer* const getRenderer();
+    static SDL_Event* const getEvent();
+
     static void setVolume(int volPercentage);
-    static void killApp() { exit(0); }
+    static void killApp();
 
 private:
     static SDL_Window* _window;

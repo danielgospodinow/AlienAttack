@@ -7,7 +7,7 @@
 #include "game.hpp"
 #include "enemy_horde.hpp"
 #include "special_monster.hpp"
-#include "health_bar.h"
+#include "health_bar.hpp"
 #include "barricades.hpp"
 #include "ui.hpp"
 

@@ -8,18 +8,19 @@ class Label
 {
 public:
     Label(const char* text, Vec2<int> pos, Colors color, int fontSize);
-    ~Label() {SDL_DestroyTexture(_texture);}
+    ~Label();
 
-    SDL_Texture* getTexture() {return _texture;}
-    const char* getText () {return _text;}
+    SDL_Texture* getTexture() const;
+    const char* getText () const;
+    int getTextLenght() const;
+    Vec2<int> getPos() const;
+    Colors getColor() const;
+    SDL_Rect getRect() const;
+    Vec2<int> getOffset () const;
+
     void setText(const char* text);
-    int getTextLenght() {return _textLenght;}
-    Vec2<int> getPos() {return _pos;}
-    Colors getColor() {return _color;}
-    SDL_Rect getRect() {return _rect;}
-    void setOffset(Vec2<int> offset) {_offset = offset;}
-    Vec2<int> getOffset () {return _offset;}
-    void changeLabelColor(Colors color);
+    void setOffset(Vec2<int> offset);
+    void setLabelColor(Colors color);
 
 private:
     SDL_Texture* _texture;

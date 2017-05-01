@@ -41,3 +41,23 @@ void SDL_Components::setVolume(int volPercentage)
     Mix_Volume(-1, 128 * volPercentage / 100);
     Mix_VolumeMusic(128 * volPercentage / 100);
 }
+
+void SDL_Components::killApp()
+{
+    exit(0);
+}
+
+SDL_Window* const SDL_Components::getWindow()
+{
+    return _window;
+}
+
+SDL_Renderer* const SDL_Components::getRenderer()
+{
+    return _renderer;
+}
+
+SDL_Event* const SDL_Components::getEvent()
+{
+    return _event;
+}

@@ -53,3 +53,7 @@ bool GameUtilities::areColliding(SDL_Rect one, SDL_Rect two)
         return true;
     return false;
 }
+
+TTF_Font* const GameUtilities::getFont() {return _font;}
+int GameUtilities::getScore() {return _score;}
+void GameUtilities::setScore(int score) {_score = score;}

@@ -253,3 +253,6 @@ bool EnemyHorde::isEmpty() const
 
     return true;
 }
+
+Vec2<int> EnemyHorde::getHordeSize() const {return _hordeSize;}
+Vec2<int> EnemyHorde::getHordePos() const {return _pos;}

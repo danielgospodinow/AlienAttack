@@ -9,9 +9,10 @@ class HealthBar
 public:
     HealthBar(int lives, bool playerTwo = false);
     ~HealthBar();
+
     void update();
     void reduce();
-    int getLives() {return _lives;}
+    int getLives() const;
 
 private:
     Sprite* _healthBar;
