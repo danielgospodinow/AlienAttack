@@ -23,8 +23,10 @@ public:
     void setLabelColor(Colors color);
 
 private:
+    SDL_Color getColorInternal(Colors color) const;
+
     SDL_Texture* _texture;
-    const char* _text;
+    char* _text;
     int _textLenght;
     Vec2<int> _pos;
     Colors _color;

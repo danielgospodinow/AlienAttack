@@ -7,6 +7,7 @@ struct Vec2
 public:
     Vec2() {x = 0; y = 0;}
     Vec2(T initX, T initY): x(initX), y(initY) {}
+    Vec2(const Vec2& other) {*this = other;}
 
     int x, y;
 

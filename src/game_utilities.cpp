@@ -59,7 +59,7 @@ bool GameUtilities::areColliding(SDL_Rect one, SDL_Rect two)
 
 void GameUtilities::readHighScores()
 {
-    ifstream highScoresFile (_highScoresFilePath /*,ios::in*/ );
+    ifstream highScoresFile (_highScoresFilePath, ios::in);
 
     if(!highScoresFile.is_open())
     {
@@ -113,6 +113,11 @@ TTF_Font* const GameUtilities::getFont() {return _font;}
 int GameUtilities::getScore() {return _score;}
 void GameUtilities::setScore(int score) {_score = score;}
 
+int* GameUtilities::getHighscores()
+{
+    return _highScores;
+}
+
 template <typename T>
 void GameUtilities::selectionSort(T* arr, int size)
 {
@@ -134,9 +139,4 @@ void GameUtilities::swap(T& one, T& two)
     T temp = one;
     one = two;
     two = temp;
-}
-
-int* GameUtilities::getHighscores()
-{
-    return _highScores;
 }

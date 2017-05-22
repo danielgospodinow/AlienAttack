@@ -1,9 +1,10 @@
 #include "highscores_scene.hpp"
 
-HighscoreScene::HighscoreScene()
+HighscoreScene::HighscoreScene() :
+    _labels()
 {
-    for(int i=0; i<globals::MAX_HIGHSCORES; i++)
-        _labels[i] = NULL;
+    //for(int i=0; i<globals::MAX_HIGHSCORES; i++) Line 4 replaces this
+    //    _labels[i] = NULL;
 
     if(GameUtilities::getHighscores()[0] == 0)
     {
@@ -16,7 +17,7 @@ HighscoreScene::HighscoreScene()
         if(GameUtilities::getHighscores()[i] == 0)
             break;
 
-        _labels[i] = new Label(std::to_string(GameUtilities::getHighscores()[i]).c_str(), Vec2<int>(globals::SCREEN_CENTER.x, globals::GAME_HEIGHT / 6 + i*42), Colors::Green, 5); //make this scalable, not hardcoded
+        _labels[i] = new Label((std::to_string(i + 1) + ". " + std::to_string(GameUtilities::getHighscores()[i])).c_str(), Vec2<int>(globals::SCREEN_CENTER.x, globals::GAME_HEIGHT / 6 + i*42), Colors::Green, 5); //make this scalable, not hardcoded
     }
 }
 

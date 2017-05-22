@@ -1,24 +1,18 @@
 #include "label.hpp"
 
 Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
-    _text(text), _textLenght(GameUtilities::getStrLen(text)), _pos(pos), _color(color), _fontSize(fontSize)
+    _text(NULL), _textLenght(GameUtilities::getStrLen(text)), _pos(pos), _color(color), _fontSize(fontSize)
+  //!!! greshno li e _text(text)?
 {
+    _text = new char[_textLenght + 1];
+    strcpy(_text, text);
+
     (_fontSize>8)?_fontSize=8:_fontSize = _fontSize;
 
     SDL_Surface* surface = NULL;
-    SDL_Color fontColor;
+    SDL_Color fontColor  = getColorInternal(color);
 
-    switch(color)
-    {
-    case White: fontColor = {255, 255, 255}; break;
-    case Black: fontColor = {0, 0, 0}; break;
-    case Blue: fontColor = {0, 0, 255}; break;
-    case Red: fontColor = {255, 0, 0}; break;
-    case Green: fontColor = {0, 255, 0}; break;
-    case Yellow: fontColor = {255, 255, 0}; break;
-    }
-
-    surface = TTF_RenderText_Solid(GameUtilities::getFont(), text, fontColor);
+    surface = TTF_RenderText_Solid(GameUtilities::getFont(), _text, fontColor);
     _texture = SDL_CreateTextureFromSurface(SDL_Components::getRenderer(), surface);
 
     SDL_FreeSurface(surface);
@@ -32,23 +26,14 @@ Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
 Label::~Label()
 {
     SDL_DestroyTexture(_texture);
+    delete [] _text;
 }
 
-void Label::setText(const char *text) //possible leak here
+void Label::setText(const char *text)
 {
     _textLenght = GameUtilities::getStrLen(text);
     SDL_Surface* surface = NULL;
-    SDL_Color fontColor;
-
-    switch(_color)
-    {
-    case White: fontColor = {255, 255, 255}; break;
-    case Black: fontColor = {0, 0, 0}; break;
-    case Blue: fontColor = {0, 0, 255}; break;
-    case Red: fontColor = {255, 0, 0}; break;
-    case Green: fontColor = {0, 255, 0}; break;
-    case Yellow: fontColor = {255, 255, 0}; break;
-    }
+    SDL_Color fontColor = getColorInternal(_color);
 
     surface = TTF_RenderText_Solid(GameUtilities::getFont(), text, fontColor);
     _texture = SDL_CreateTextureFromSurface(SDL_Components::getRenderer(), surface);
@@ -64,20 +49,26 @@ void Label::setLabelColor(Colors color)
     if(_color == color)
         return;
 
-    SDL_Color fontColor = {0, 0, 0};
+    SDL_Color fontColor = getColorInternal(color);
+    SDL_SetTextureColorMod(_texture, fontColor.r, fontColor.g, fontColor.b);
+    _color = color;
+}
+
+SDL_Color Label::getColorInternal(Colors color) const
+{
+    SDL_Color newColor;
 
     switch(color)
     {
-    case White: fontColor = {255, 255, 255}; break;
-    case Black: fontColor = {0, 0, 0}; break;
-    case Blue: fontColor = {0, 0, 255}; break;
-    case Red: fontColor = {255, 0, 0}; break;
-    case Green: fontColor = {0, 255, 0}; break;
-    case Yellow: fontColor = {255, 255, 0}; break;
+    case White: newColor = {255, 255, 255}; break;
+    case Black: newColor = {0, 0, 0}; break;
+    case Blue: newColor = {0, 0, 255}; break;
+    case Red: newColor = {255, 0, 0}; break;
+    case Green: newColor = {0, 255, 0}; break;
+    case Yellow: newColor = {255, 255, 0}; break;
     }
 
-    SDL_SetTextureColorMod(_texture, fontColor.r, fontColor.g, fontColor.b);
-    _color = color;
+    return newColor;
 }
 
 SDL_Texture* Label::getTexture() const {return _texture;}

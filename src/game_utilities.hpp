@@ -28,7 +28,7 @@ public:
     template <typename T>
     static void swap(T& one, T& two);
 
-    static void printScore() //temp meth for debugging in main_menu_scene
+    static void printScore() //temp method for debugging in main_menu_scene
     {
         for(int i=0; i<globals::MAX_HIGHSCORES; i++)
             cout << _highScores[i] << endl;
