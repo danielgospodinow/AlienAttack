@@ -4,8 +4,7 @@ Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
     _text(NULL), _textLenght(GameUtilities::getStrLen(text)), _pos(pos), _color(color), _fontSize(fontSize)
   //!!! greshno li e _text(text)?
 {
-    _text = new char[_textLenght + 1];
-    strcpy(_text, text);
+    setTextInternal(text);
 
     (_fontSize>8)?_fontSize=8:_fontSize = _fontSize;
 
@@ -23,6 +22,24 @@ Label::Label(const char* text, Vec2<int> pos, Colors color, int fontSize) :
     _rect.y = _pos.y - _rect.h / 2;
 }
 
+void Label::setTextInternal(const char *newText)
+{
+    delete[] _text;
+
+    _text = new char[GameUtilities::getStrLen(newText) + 1];
+    strcpy(_text, newText);
+}
+
+//Label::Label(const Label &other)
+//{
+//    //this = other;
+//}
+
+//Label& Label::operator =(const Label& other)
+//{
+
+//}
+
 Label::~Label()
 {
     SDL_DestroyTexture(_texture);
@@ -31,6 +48,7 @@ Label::~Label()
 
 void Label::setText(const char *text)
 {
+    setTextInternal(text);
     _textLenght = GameUtilities::getStrLen(text);
     SDL_Surface* surface = NULL;
     SDL_Color fontColor = getColorInternal(_color);

@@ -10,6 +10,9 @@ public:
     Label(const char* text, Vec2<int> pos, Colors color, int fontSize);
     ~Label();
 
+//    Label(const Label& other);
+//    Label& operator =(const Label& other);
+
     SDL_Texture* getTexture() const;
     const char* getText () const;
     int getTextLenght() const;
@@ -24,6 +27,7 @@ public:
 
 private:
     SDL_Color getColorInternal(Colors color) const;
+    void setTextInternal(const char* newText);
 
     SDL_Texture* _texture;
     char* _text;
